@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DotNetBusinessWorkFlow.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9ab883f3af6bb4d373002ed3624aaab46e3f0fe")]
 [assembly: System.Reflection.AssemblyProductAttribute("DotNetBusinessWorkFlow.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DotNetBusinessWorkFlow.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

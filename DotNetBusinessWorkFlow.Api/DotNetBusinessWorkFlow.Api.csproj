@@ -6,12 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DotNetBusinessWorkFlow.Application\DotNetBusinessWorkFlow.Application.csproj" />
-  </ItemGroup>
-
 </Project>

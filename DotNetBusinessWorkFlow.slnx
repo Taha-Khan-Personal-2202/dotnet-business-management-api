@@ -1,6 +1,9 @@
 <Solution>
-  <Project Path="DotNetBusinessWorkFlow.Api/DotNetBusinessWorkFlow.Api.csproj" />
-  <Project Path="DotNetBusinessWorkFlow.Application/DotNetBusinessWorkFlow.Application.csproj" />
-  <Project Path="DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj" />
-  <Project Path="DotNetBusinessWorkFlow.Infrastructure/DotNetBusinessWorkFlow.Infrastructure.csproj" />
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="DotNetBusinessWorkFlow.Api/DotNetBusinessWorkFlow.Api.csproj" Id="c4c837ac-5631-41e3-8bb1-bb3cd2a48bbd" />
+  <Project Path="DotNetBusinessWorkFlow.Application/DotNetBusinessWorkFlow.Application.csproj" Id="52bf3ef7-fa5e-442f-8c20-99f25a55777c" />
+  <Project Path="DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj" Id="da46c162-771f-4e38-9a3c-af3d1503bacf" />
+  <Project Path="DotNetBusinessWorkFlow.Infrastructure/DotNetBusinessWorkFlow.Infrastructure.csproj" Id="e15bf323-6ab3-4e84-bddd-716a6aa556f8" />
 </Solution>

@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {
-      "DotNetBusinessWorkFlow.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "compile": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Domain.dll": {}
-        }
-      }
-    }
+    "net10.0": {}
   },
-  "libraries": {
-    "DotNetBusinessWorkFlow.Domain/1.0.0": {
-      "type": "project",
-      "path": "../DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj",
-      "msbuildProject": "../DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net10.0": [
-      "DotNetBusinessWorkFlow.Domain >= 1.0.0"
-    ]
+    "net10.0": []
   },
   "packageFolders": {
     "C:\\Users\\TUF GAMING\\.nuget\\packages\\": {},
@@ -33,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Infrastructure\\DotNetBusinessWorkFlow.Infrastructure.csproj",
+      "projectUniqueName": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Infrastructure\\DotNetBusinessWorkFlow.Infrastructure.csproj",
       "projectName": "DotNetBusinessWorkFlow.Infrastructure",
-      "projectPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Infrastructure\\DotNetBusinessWorkFlow.Infrastructure.csproj",
+      "projectPath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Infrastructure\\DotNetBusinessWorkFlow.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\TUF GAMING\\.nuget\\packages\\",
-      "outputPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Infrastructure\\obj\\",
+      "outputPath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -58,11 +39,7 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {
-            "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj": {
-              "projectPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DotNetBusinessWorkFlow.Infrastructure\DotNetBusinessWorkFlow.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>

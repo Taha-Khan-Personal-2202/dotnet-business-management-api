@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "I/riUunwjp0=",
+  "dgSpecHash": "ZKpdluJKZlY=",
   "success": true,
-  "projectFilePath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Api\\DotNetBusinessWorkFlow.Api.csproj",
+  "projectFilePath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Api\\DotNetBusinessWorkFlow.Api.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

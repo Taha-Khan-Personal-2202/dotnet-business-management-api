@@ -1,66 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {
-      "DotNetBusinessWorkFlow.Application/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "DotNetBusinessWorkFlow.Infrastructure": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Application.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Application.dll": {}
-        }
-      },
-      "DotNetBusinessWorkFlow.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "compile": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Domain.dll": {}
-        }
-      },
-      "DotNetBusinessWorkFlow.Infrastructure/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "DotNetBusinessWorkFlow.Domain": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Infrastructure.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DotNetBusinessWorkFlow.Infrastructure.dll": {}
-        }
-      }
-    }
+    "net10.0": {}
   },
-  "libraries": {
-    "DotNetBusinessWorkFlow.Application/1.0.0": {
-      "type": "project",
-      "path": "../DotNetBusinessWorkFlow.Application/DotNetBusinessWorkFlow.Application.csproj",
-      "msbuildProject": "../DotNetBusinessWorkFlow.Application/DotNetBusinessWorkFlow.Application.csproj"
-    },
-    "DotNetBusinessWorkFlow.Domain/1.0.0": {
-      "type": "project",
-      "path": "../DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj",
-      "msbuildProject": "../DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj"
-    },
-    "DotNetBusinessWorkFlow.Infrastructure/1.0.0": {
-      "type": "project",
-      "path": "../DotNetBusinessWorkFlow.Infrastructure/DotNetBusinessWorkFlow.Infrastructure.csproj",
-      "msbuildProject": "../DotNetBusinessWorkFlow.Infrastructure/DotNetBusinessWorkFlow.Infrastructure.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net10.0": [
-      "DotNetBusinessWorkFlow.Application >= 1.0.0"
-    ]
+    "net10.0": []
   },
   "packageFolders": {
     "C:\\Users\\TUF GAMING\\.nuget\\packages\\": {},
@@ -69,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Api\\DotNetBusinessWorkFlow.Api.csproj",
+      "projectUniqueName": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Api\\DotNetBusinessWorkFlow.Api.csproj",
       "projectName": "DotNetBusinessWorkFlow.Api",
-      "projectPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Api\\DotNetBusinessWorkFlow.Api.csproj",
+      "projectPath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Api\\DotNetBusinessWorkFlow.Api.csproj",
       "packagesPath": "C:\\Users\\TUF GAMING\\.nuget\\packages\\",
-      "outputPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Api\\obj\\",
+      "outputPath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -94,11 +39,7 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {
-            "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Application\\DotNetBusinessWorkFlow.Application.csproj": {
-              "projectPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Application\\DotNetBusinessWorkFlow.Application.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

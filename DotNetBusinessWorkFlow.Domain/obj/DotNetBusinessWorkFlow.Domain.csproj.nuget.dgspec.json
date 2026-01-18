@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj": {}
+    "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj": {}
   },
   "projects": {
-    "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj": {
+    "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj",
+        "projectUniqueName": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj",
         "projectName": "DotNetBusinessWorkFlow.Domain",
-        "projectPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj",
+        "projectPath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj",
         "packagesPath": "C:\\Users\\TUF GAMING\\.nuget\\packages\\",
-        "outputPath": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\obj\\",
+        "outputPath": "D:\\dotnet-business-management-api\\DotNetBusinessWorkFlow.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
