@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetBusinessWorkFlow.Application\DotNetBusinessWorkFlow.Application.csproj" />
+    <ProjectReference Include="..\DotNetBusinessWorkFlow.Infrastructure\DotNetBusinessWorkFlow.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
