@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\DotNetBusinessWorkFlow\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D8303B6F-B7EA-47E8-9571-50D9B5453CD4}|DotNetBusinessWorkFlow.Application\\DotNetBusinessWorkFlow.Application.csproj|d:\\dotnetbusinessworkflow\\dotnetbusinessworkflow.application\\class3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8303B6F-B7EA-47E8-9571-50D9B5453CD4}|DotNetBusinessWorkFlow.Application\\DotNetBusinessWorkFlow.Application.csproj|solutionrelative:dotnetbusinessworkflow.application\\class3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53707510-979C-434E-B13C-5BA81D6287D6}|DotNetBusinessWorkFlow.Infrastructure\\DotNetBusinessWorkFlow.Infrastructure.csproj|d:\\dotnetbusinessworkflow\\dotnetbusinessworkflow.infrastructure\\class2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53707510-979C-434E-B13C-5BA81D6287D6}|DotNetBusinessWorkFlow.Infrastructure\\DotNetBusinessWorkFlow.Infrastructure.csproj|solutionrelative:dotnetbusinessworkflow.infrastructure\\class2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{65E33823-E4EE-4019-B838-F5FBE251A18D}|DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj|d:\\dotnetbusinessworkflow\\dotnetbusinessworkflow.domain\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{65E33823-E4EE-4019-B838-F5FBE251A18D}|DotNetBusinessWorkFlow.Domain\\DotNetBusinessWorkFlow.Domain.csproj|solutionrelative:dotnetbusinessworkflow.domain\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Class3.cs",
+              "DocumentMoniker": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Application\\Class3.cs",
+              "RelativeDocumentMoniker": "DotNetBusinessWorkFlow.Application\\Class3.cs",
+              "ToolTip": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Application\\Class3.cs",
+              "RelativeToolTip": "DotNetBusinessWorkFlow.Application\\Class3.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T16:02:56.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Class2.cs",
+              "DocumentMoniker": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Infrastructure\\Class2.cs",
+              "RelativeDocumentMoniker": "DotNetBusinessWorkFlow.Infrastructure\\Class2.cs",
+              "ToolTip": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Infrastructure\\Class2.cs",
+              "RelativeToolTip": "DotNetBusinessWorkFlow.Infrastructure\\Class2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T16:02:07.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\Class1.cs",
+              "RelativeDocumentMoniker": "DotNetBusinessWorkFlow.Domain\\Class1.cs",
+              "ToolTip": "D:\\DotNetBusinessWorkFlow\\DotNetBusinessWorkFlow.Domain\\Class1.cs",
+              "RelativeToolTip": "DotNetBusinessWorkFlow.Domain\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T16:01:40.115Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

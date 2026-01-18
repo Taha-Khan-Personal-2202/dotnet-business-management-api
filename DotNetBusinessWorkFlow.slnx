@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DotNetBusinessWorkFlow.Api/DotNetBusinessWorkFlow.Api.csproj" />
+  <Project Path="DotNetBusinessWorkFlow.Application/DotNetBusinessWorkFlow.Application.csproj" />
+  <Project Path="DotNetBusinessWorkFlow.Domain/DotNetBusinessWorkFlow.Domain.csproj" />
+  <Project Path="DotNetBusinessWorkFlow.Infrastructure/DotNetBusinessWorkFlow.Infrastructure.csproj" />
+</Solution>
