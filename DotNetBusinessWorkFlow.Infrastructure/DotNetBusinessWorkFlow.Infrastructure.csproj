@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotNetBusinessWorkFlow.Application\DotNetBusinessWorkFlow.Application.csproj" />
     <ProjectReference Include="..\DotNetBusinessWorkFlow.Domain\DotNetBusinessWorkFlow.Domain.csproj" />
   </ItemGroup>
 

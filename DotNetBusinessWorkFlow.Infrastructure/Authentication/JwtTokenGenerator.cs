@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 
-namespace DotNetBusinessWorkFlow.Infrastructure.Authentication
+namespace DotNetBusinessWorkFlow.Infrastructure.Authentication;
+
+public class JwtTokenGenerator(IConfiguration config) : IJwtTokenGenerator
 {
-    internal class JwtTokenGenerator
+    public readonly IConfiguration _config = config;
+
+    public string GenerateToken(User user)
     {
+        return string.Empty;
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Domain.Enums;
 
-namespace DotNetBusinessWorkFlow.Domain.Enums
+public enum PaymentStatus
 {
-    internal class PaymentStatus
-    {
-    }
+    Recorded = 1
 }

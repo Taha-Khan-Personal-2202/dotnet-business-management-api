@@ -1,10 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkFlow.Domain.Common;
 
-namespace DotNetBusinessWorkFlow.Domain.Entities
+namespace DotNetBusinessWorkflow.Domain.Entities;
+
+public class Customer : AuditableEntity
 {
-    internal class Customer
+    public string Name { get; private set; }
+    public string Email { get; private set; }
+    public bool IsActive { get; private set; }
+
+    private Customer() { }
+
+    public Customer(string name, string email)
     {
+        Name = name;
+        Email = email;
+        IsActive = true;
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        MarkUpdated();
     }
 }

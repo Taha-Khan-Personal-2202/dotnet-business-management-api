@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Domain.Common;
 
-namespace DotNetBusinessWorkFlow.Domain.Common
+public abstract class AuditableEntity
 {
-    internal class AuditableEntity
-    {
-    }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdateAt { get; set; }
+
+    public void MarkUpdated() => UpdateAt = DateTime.UtcNow;
 }

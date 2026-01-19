@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Domain.Enums;
 
-namespace DotNetBusinessWorkFlow.Domain.Enums
+public enum OrderStatus
 {
-    internal class OrderStatus
-    {
-    }
+    Created = 1,
+    Confirmed = 2,
+    Paid = 3,
+    Completed = 4,
+    Cancelled = 5
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 
-namespace DotNetBusinessWorkFlow.Application.Common.Interfaces
+namespace DotNetBusinessWorkFlow.Application.Common.Interfaces;
+
+public interface IJwtTokenGenerator
 {
-    internal interface IJwtTokenGenerator
-    {
-    }
+    string GenerateToken(User user);
 }

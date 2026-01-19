@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Domain.Enums;
 
-namespace DotNetBusinessWorkFlow.Domain.Enums
+public enum UserRole
 {
-    internal class UserRole
-    {
-    }
+    Admin = 1,
+    Manager = 2
 }
+
