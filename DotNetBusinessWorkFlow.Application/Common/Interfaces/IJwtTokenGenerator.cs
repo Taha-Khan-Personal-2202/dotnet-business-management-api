@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkFlow.Domain.Entities;
+﻿using DotNetBusinessWorkflow.Domain.Entities;
 
 namespace DotNetBusinessWorkFlow.Application.Common.Interfaces;
 

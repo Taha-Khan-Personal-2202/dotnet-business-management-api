@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Application.DTOs.Auth;
 
-namespace DotNetBusinessWorkFlow.Application.DTOs.Auth
+public class LoginResponseDto
 {
-    internal class LoginResponseDto
-    {
-    }
+    public string Token { get; set; } = null!;
+    public string Role { get; set; } = null!;
 }

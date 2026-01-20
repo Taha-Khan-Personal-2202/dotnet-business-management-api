@@ -1,21 +1,22 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Infrastructure.Authentication;
 
-public static class PasswordHasher
+public sealed class PasswordHasher : IPasswordHasher
 {
-    public static string Hash(string password)
+    public string Hash(string password)
     {
         using var sha = SHA256.Create();
         var bytes = Encoding.UTF8.GetBytes(password);
-        var hmac = sha.ComputeHash(bytes);
-        return Convert.ToBase64String(bytes);
+        var hashBytes = sha.ComputeHash(bytes);
+        return Convert.ToBase64String(hashBytes);
     }
 
-    public static bool Verfiy(string password, string hash)
+    public bool Verify(string password, string passwordHash)
     {
-        var hashed = Hash(password);
-        return hashed == hash;
+        var computedHash = Hash(password);
+        return computedHash == passwordHash;
     }
 }

@@ -1,10 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkflow.Domain.Entities;
+using DotNetBusinessWorkFlow.Domain.Interfaces;
+using DotNetBusinessWorkFlow.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace DotNetBusinessWorkFlow.Infrastructure.Repositories
+namespace DotNetBusinessWorkFlow.Infrastructure.Repositories;
+
+public class UserRepository(AppDbContext context) : IUserRepository
 {
-    internal class UserRepository
+    private readonly AppDbContext _context = context;
+
+    public async Task AddAsync(User user)
     {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<User?> GetByEmailAsync(string email)
+    {
+        return await _context.Users
+             .FirstOrDefaultAsync(f => f.Email == email);
+
     }
 }
