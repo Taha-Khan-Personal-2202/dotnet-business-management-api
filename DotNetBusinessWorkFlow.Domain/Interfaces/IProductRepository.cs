@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkflow.Domain.Entities;
 
-namespace DotNetBusinessWorkFlow.Domain.Interfaces
+namespace DotNetBusinessWorkFlow.Domain.Interfaces;
+
+public interface IProductRepository
 {
-    internal interface IProductRepository
-    {
-    }
+    Task AddAsync(Product product);
+    Task<Product?> GetByIdAsync(Guid id);
+    Task<IEnumerable<Product>> GetAllAsync();
 }

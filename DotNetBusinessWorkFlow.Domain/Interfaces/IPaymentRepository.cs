@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkflow.Domain.Entities;
 
-namespace DotNetBusinessWorkFlow.Domain.Interfaces
+namespace DotNetBusinessWorkFlow.Domain.Interfaces;
+
+public interface IPaymentRepository
 {
-    internal interface IPaymentRepository
-    {
-    }
+    Task AddAsync(Payment payment);
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Application.UseCases.Customers;
 
-namespace DotNetBusinessWorkFlow.Application.UseCases.Customers
+public class CreateCustomerUseCase
 {
-    internal class CreateCustomerUseCase
-    {
-    }
 }

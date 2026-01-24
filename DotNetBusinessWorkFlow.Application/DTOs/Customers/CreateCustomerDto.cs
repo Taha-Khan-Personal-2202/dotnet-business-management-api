@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
-namespace DotNetBusinessWorkFlow.Application.DTOs.Customers
+public class CreateCustomerDto
 {
-    internal class CreateCustomerDto
-    {
-    }
+    public string Name { get; set; }
+    public string Email { get; set; }
 }

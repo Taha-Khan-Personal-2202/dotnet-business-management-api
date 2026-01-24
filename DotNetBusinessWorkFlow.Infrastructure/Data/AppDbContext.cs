@@ -4,24 +4,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetBusinessWorkFlow.Infrastructure.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext : DbContext
 {
-    public DbContextOptions _options = options;
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options) { }
 
+    // AUTH
     public DbSet<User> Users => Set<User>();
+
+    // BUSINESS
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<Invoice> Invoices => Set<Invoice>();
+    public DbSet<Payment> Payments => Set<Payment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(builder =>
-        {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.PasswordHash).IsRequired();
-            builder.Property(x => x.Role).IsRequired();
-        });
+        // Apply all IEntityTypeConfiguration<T>
+        modelBuilder.ApplyConfigurationsFromAssembly(
+            typeof(AppDbContext).Assembly);
 
+        // Seed data
         UserSeed.Seed(modelBuilder);
     }
 }

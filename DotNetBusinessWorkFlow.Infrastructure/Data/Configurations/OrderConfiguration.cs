@@ -1,10 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkflow.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DotNetBusinessWorkFlow.Infrastructure.Data.Configurations
+public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
-    internal class OrderConfiguration
+    public void Configure(EntityTypeBuilder<Order> builder)
     {
+        builder.HasKey(o => o.Id);
+
+        builder.Property(o => o.Status)
+               .IsRequired();
+
+        builder.OwnsOne(o => o.TotalAmount);
+
+        builder.HasMany(o => o.Items)
+               .WithOne()
+               .HasForeignKey("OrderId");
     }
 }

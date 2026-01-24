@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DotNetBusinessWorkflow.Domain.Entities;
 
-namespace DotNetBusinessWorkFlow.Domain.Interfaces
+namespace DotNetBusinessWorkFlow.Domain.Interfaces;
+
+public interface IOrderRepository
 {
-    internal interface IOrderRepository
-    {
-    }
+    Task AddAsync(Order order);
+    Task<Order?> GetByIdAsync(Guid id);
+    Task SaveAsync();
 }
