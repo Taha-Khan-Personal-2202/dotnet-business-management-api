@@ -1,4 +1,3 @@
-using DotNetBusinessWorkFlow.Api.Middlewares;
 using DotNetBusinessWorkFlow.Application;
 using DotNetBusinessWorkFlow.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -98,7 +97,7 @@ var app = builder.Build();
 // ------------------------------------
 // Middleware Pipeline
 // ------------------------------------
-app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

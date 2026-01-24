@@ -1,4 +1,5 @@
 ﻿using DotNetBusinessWorkflow.Domain.Entities;
+using DotNetBusinessWorkflow.Infrastructure.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetBusinessWorkFlow.Infrastructure.Data;
@@ -20,5 +21,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             builder.Property(x => x.PasswordHash).IsRequired();
             builder.Property(x => x.Role).IsRequired();
         });
+
+        UserSeed.Seed(modelBuilder);
     }
 }
