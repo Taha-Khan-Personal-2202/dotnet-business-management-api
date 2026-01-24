@@ -4,7 +4,7 @@ namespace DotNetBusinessWorkFlow.Domain.Interfaces;
 
 public interface IOrderRepository
 {
-    Task AddAsync(Order order);
     Task<Order?> GetByIdAsync(Guid id);
-    Task SaveAsync();
+    Task AddAsync(Order order);
+    Task UpdateAsync(Order order);
 }

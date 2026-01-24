@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260124052554_AddedNewTables")]
-    partial class AddedNewTables
+    [Migration("20260124124208_AddOrders")]
+    partial class AddOrders
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,7 +267,8 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                 {
                     b.HasOne("DotNetBusinessWorkflow.Domain.Entities.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("DotNetBusinessWorkFlow.Domain.ValueObjects.Money", "UnitPrice", b1 =>
                         {

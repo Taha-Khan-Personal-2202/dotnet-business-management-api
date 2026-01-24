@@ -2,12 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace DotNetBusinessWorkFlow.Infrastructure.Data.Configurations;
+
 public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
 {
     public void Configure(EntityTypeBuilder<OrderItem> builder)
     {
-        builder.HasKey(i => i.Id);
+        builder.HasKey(oi => oi.Id);
 
-        builder.OwnsOne(i => i.UnitPrice);
+        builder.Property(oi => oi.Quantity)
+               .IsRequired();
+
+        builder.OwnsOne(oi => oi.UnitPrice);
     }
 }

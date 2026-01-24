@@ -264,7 +264,8 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                 {
                     b.HasOne("DotNetBusinessWorkflow.Domain.Entities.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("DotNetBusinessWorkFlow.Domain.ValueObjects.Money", "UnitPrice", b1 =>
                         {

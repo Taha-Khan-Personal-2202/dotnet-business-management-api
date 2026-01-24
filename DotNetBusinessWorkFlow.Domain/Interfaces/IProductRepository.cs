@@ -1,10 +1,11 @@
 ﻿using DotNetBusinessWorkflow.Domain.Entities;
 
-namespace DotNetBusinessWorkFlow.Domain.Interfaces;
+namespace DotNetBusinessWorkflow.Domain.Repositories;
 
 public interface IProductRepository
 {
-    Task AddAsync(Product product);
     Task<Product?> GetByIdAsync(Guid id);
-    Task<IEnumerable<Product>> GetAllAsync();
+    Task<IReadOnlyList<Product>> GetAllAsync();
+    Task AddAsync(Product product);
+    Task UpdateAsync(Product product);
 }
