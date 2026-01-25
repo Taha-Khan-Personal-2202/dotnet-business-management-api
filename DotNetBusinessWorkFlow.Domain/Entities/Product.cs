@@ -5,9 +5,9 @@ namespace DotNetBusinessWorkflow.Domain.Entities;
 
 public class Product : AuditableEntity
 {
-    public string Name { get; private set; }
-    public Money Price { get; private set; }
-    public bool IsActive { get; private set; }
+    public string Name { get; set; }
+    public Money Price { get; set; }
+    public bool IsActive { get; set; }
 
     private Product() { }
 

@@ -3,9 +3,8 @@ using DotNetBusinessWorkFlow.Domain.ValueObjects;
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Products;
 
-public class ProductResponseDto : AuditableEntity
+public class ProductRequestUpdateDto : BaseEntity
 {
-    public string Name { get; set; }
-    public Money Price { get; set; }
-    public bool IsActive { get; set; }
+    public string Name { get; private set; }
+    public Money Price { get; private set; }
 }

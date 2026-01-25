@@ -9,10 +9,10 @@ public class CustomerRepository(AppDbContext context) : ICustomerRepository
 {
     private readonly AppDbContext _context = context;
 
-    public async Task AddAsync(Customer customer)
+    public Task AddAsync(Customer customer)
     {
         _context.Customers.Add(customer);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
     public async Task<IEnumerable<Customer>> GetAllAsync()
@@ -33,9 +33,9 @@ public class CustomerRepository(AppDbContext context) : ICustomerRepository
             .FirstOrDefaultAsync(f => f.Id == id);
     }
 
-    public async Task UpdateAsync(Customer customer)
+    public Task UpdateAsync(Customer customer)
     {
         _context.Customers.Update(customer);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 }

@@ -33,4 +33,13 @@ public class ProductRepository(AppDbContext context)
         _context.Products.Update(product);
         return Task.CompletedTask;
     }
+
+    public async Task DeActivateAsync(Guid productId)
+    {
+        var existingProduct = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == productId);
+        existingProduct.IsActive = !existingProduct.IsActive;
+        _context.Products.Update(existingProduct);
+        await _context.SaveChangesAsync();
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
-public class CustomerResponseDto : AuditableEntity
+public class CustomerRequestUpdateDto : AuditableEntity
 {
     public string Name { get; set; }
     public string Email { get; set; }

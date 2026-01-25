@@ -12,7 +12,6 @@ public class UserRepository(AppDbContext context) : IUserRepository
     public async Task AddAsync(User user)
     {
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
     }
 
     public async Task<User?> GetByEmailAsync(string email)

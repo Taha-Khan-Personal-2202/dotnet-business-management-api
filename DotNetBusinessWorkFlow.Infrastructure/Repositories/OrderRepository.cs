@@ -13,7 +13,6 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
     public async Task AddAsync(Order order)
     {
         await _context.Orders.AddAsync(order);
-        await _context.SaveChangesAsync();
     }
 
     public async Task<Order?> GetByIdAsync(Guid id)
@@ -26,6 +25,5 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
     public async Task UpdateAsync(Order order)
     {
         _context.Orders.Update(order);
-        await _context.SaveChangesAsync();
     }
 }
