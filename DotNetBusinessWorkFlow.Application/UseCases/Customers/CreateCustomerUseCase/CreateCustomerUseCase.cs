@@ -19,6 +19,6 @@ public class CreateCustomerUseCase(
         await _customerRepository.AddAsync(customerEntity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return customer.Id;
+        return customerEntity.Id;
     }
 }
