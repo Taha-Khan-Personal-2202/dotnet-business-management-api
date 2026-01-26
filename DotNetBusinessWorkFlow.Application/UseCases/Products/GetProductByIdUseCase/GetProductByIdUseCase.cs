@@ -11,6 +11,6 @@ public class GetProductByIdUseCase(IProductRepository repository) : IGetProductB
     public async Task<ProductResponseDto?> ExecuteAsync(Guid productId)
     {
         var product = await _repository.GetByIdAsync(productId);
-        return EntityToDtoMapping.MapProductEntityToDto(product);
+        return EntityToDtoMapping.MapProduct(product);
     }
 }

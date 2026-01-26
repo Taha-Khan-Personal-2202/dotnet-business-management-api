@@ -1,12 +1,14 @@
 ﻿using DotNetBusinessWorkflow.Domain.Entities;
 using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.OrderItem;
+using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
 
 namespace DotNetBusinessWorkFlow.Application.Mappings;
 
 public static class EntityToDtoMapping
 {
-    public static ProductResponseDto? MapProductEntityToDto(Product? product)
+    public static ProductResponseDto? MapProduct(Product? product)
     {
         if(product == null) return null;
         return new ProductResponseDto()
@@ -20,7 +22,7 @@ public static class EntityToDtoMapping
         };
     }
 
-    public static CustomerResponseDto? MapCustomerEntityToDto(Customer? customer)
+    public static CustomerResponseDto? MapCustomer(Customer? customer)
     {
         if (customer == null) return null;
         return new CustomerResponseDto()
@@ -33,5 +35,33 @@ public static class EntityToDtoMapping
             UpdateAt = customer.UpdateAt
         };
     }
+
+    public static OrderResponseDto MapOrder(Order order)
+    {
+        return new OrderResponseDto
+        {
+            Id = order.Id,
+            CustomerId = order.CustomerId,
+            Status = order.Status,
+            TotalAmount = order.TotalAmount.Amount,
+            CreatedAt = order.CreatedAt,
+            UpdateAt = order.UpdateAt,
+            Items = order.Items
+                .Select(MapOrderItemEntityToDto)
+                .ToList()
+        };
+    }
+
+    private static OrderItemResponseDto MapOrderItemEntityToDto(OrderItem item)
+    {
+        return new OrderItemResponseDto
+        {
+            ProductId = item.ProductId,
+            Quantity = item.Quantity,
+            UnitPrice = item.UnitPrice.Amount,
+            TotalPrice = item.GetTotal().Amount
+        };
+    }
+
 
 }

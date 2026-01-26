@@ -15,7 +15,7 @@ public class GetAllCustomersUseCase(
         var customers = await _customerRepository.GetAllAsync();
 
         return customers
-            .Select(EntityToDtoMapping.MapCustomerEntityToDto)
+            .Select(EntityToDtoMapping.MapCustomer)
             .ToList();
     }
 

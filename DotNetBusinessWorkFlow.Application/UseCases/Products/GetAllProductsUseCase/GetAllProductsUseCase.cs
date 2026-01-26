@@ -13,7 +13,7 @@ public class GetAllProductsUseCase(IProductRepository repository) : IGetAllProdu
         var returnList = new List<ProductResponseDto>();
         foreach (var product in products)
         {
-            returnList.Add(EntityToDtoMapping.MapProductEntityToDto(product));
+            returnList.Add(EntityToDtoMapping.MapProduct(product));
         }
         return returnList;
     }

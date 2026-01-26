@@ -5,6 +5,15 @@ using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCa
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByEmailUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByIdUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.UpdateCustomerUseCase;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.AddOrderItem;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.CancelOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.CompleteOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.ConfirmOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.CreateOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetAllOrders;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrdersByCustomer;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.CreateProductUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.GetAllProductsUseCase;
@@ -33,6 +42,18 @@ public static class DependencyInjection
         services.AddScoped<IGetCustomerByEmailUseCase, GetCustomerByEmailUseCase>();
         services.AddScoped<IGetAllCustomersUseCase, GetAllCustomersUseCase>();
         services.AddScoped<IUpdateCustomerUseCase, UpdateCustomerUseCase>();
+
+        // Order Use Cases
+        services.AddScoped<ICreateOrderUseCase, CreateOrderUseCase>();
+        services.AddScoped<IAddOrderItemUseCase, AddOrderItemUseCase>();
+        services.AddScoped<IConfirmOrderUseCase, ConfirmOrderUseCase>();
+        services.AddScoped<IPayOrderUseCase, PayOrderUseCase>();
+        services.AddScoped<ICompleteOrderUseCase, CompleteOrderUseCase>();
+        services.AddScoped<ICancelOrderUseCase, CancelOrderUseCase>();
+        services.AddScoped<IGetOrderByIdUseCase, GetOrderByIdUseCase>();
+        services.AddScoped<IGetAllOrdersUseCase, GetAllOrdersUseCase>();
+        services.AddScoped<IGetOrdersByCustomerUseCase, GetOrdersByCustomerUseCase>();
+
 
         return services;
     }

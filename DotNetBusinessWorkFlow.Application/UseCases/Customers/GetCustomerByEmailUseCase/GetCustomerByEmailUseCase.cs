@@ -12,6 +12,6 @@ public class GetCustomerByEmailUseCase(
 
     public async Task<CustomerResponseDto?> ExecuteAsync(string email)
     {
-        return EntityToDtoMapping.MapCustomerEntityToDto(await _customerRepository.GetByEmailAsync(email));
+        return EntityToDtoMapping.MapCustomer(await _customerRepository.GetByEmailAsync(email));
     }
 }

@@ -7,19 +7,33 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Repositories;
 
 public class OrderRepository(AppDbContext context) : IOrderRepository
 {
-
     private readonly AppDbContext _context = context;
 
     public async Task AddAsync(Order order)
     {
-        await _context.Orders.AddAsync(order);
+        _context.Orders.Add(order);
     }
 
     public async Task<Order?> GetByIdAsync(Guid id)
     {
         return await _context.Orders
             .Include(o => o.Items)
-            .FirstOrDefaultAsync(f => f.Id == id);
+            .FirstOrDefaultAsync(o => o.Id == id);
+    }
+
+    public async Task<IEnumerable<Order>> GetByCustomerIdAsync(Guid customerId)
+    {
+        return await _context.Orders
+            .Include(o => o.Items)
+            .Where(o => o.CustomerId == customerId)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Order>> GetAllAsync()
+    {
+        return await _context.Orders
+            .Include(o => o.Items)
+            .ToListAsync();
     }
 
     public async Task UpdateAsync(Order order)

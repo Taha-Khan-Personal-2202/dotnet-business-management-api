@@ -1,8 +1,8 @@
-﻿using DotNetBusinessWorkFlow.Domain.Common;
+﻿using DotNetBusinessWorkFlow.Application.Common;
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
-public class CustomerRequestUpdateDto : AuditableEntity
+public class CustomerRequestUpdateDto : AuditableEntityDto
 {
     public string Name { get; set; }
     public string Email { get; set; }

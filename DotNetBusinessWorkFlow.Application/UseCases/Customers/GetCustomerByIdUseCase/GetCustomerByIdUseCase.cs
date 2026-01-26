@@ -12,6 +12,6 @@ public class GetCustomerByIdUseCase(
 
     public async Task<CustomerResponseDto?> ExecuteAsync(Guid id)
     {
-        return EntityToDtoMapping.MapCustomerEntityToDto(await _customerRepository.GetByIdAsync(id));
+        return EntityToDtoMapping.MapCustomer(await _customerRepository.GetByIdAsync(id));
     }
 }
