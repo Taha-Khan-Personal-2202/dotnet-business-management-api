@@ -44,7 +44,7 @@ public class CustomersController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(Guid customerId, [FromBody] CustomerRequestUpdateDto dto)
     {
-        await _updateCustomer.ExecuteAsync(dto);
+        await _updateCustomer.ExecuteAsync(customerId, dto);
         return Ok();
     }
 

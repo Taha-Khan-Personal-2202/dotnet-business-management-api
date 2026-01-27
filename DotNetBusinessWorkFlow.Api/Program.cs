@@ -3,6 +3,7 @@ using DotNetBusinessWorkFlow.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,13 +38,18 @@ builder.Services.AddAuthentication(options =>
 
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
+
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
         ),
 
+        RoleClaimType = ClaimTypes.Role,
+        NameClaimType = ClaimTypes.Email,
+
         ClockSkew = TimeSpan.Zero
     };
 });
+
 
 // ------------------------------------
 // Authorization

@@ -10,14 +10,18 @@ public class CreateCustomerUseCase(
     IUnitOfWork unitOfWork
 ) : ICreateCustomerUseCase
 {
-    private readonly ICustomerRepository _customerRepository = customerRepository;
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
-
-    public async Task<Guid> ExecuteAsync(CustomerRequestDto customer, CancellationToken cancellationToken = default)
+    public async Task<Guid> ExecuteAsync(
+        CustomerRequestDto customer,
+        CancellationToken cancellationToken = default)
     {
+        var existing = await customerRepository.GetByEmailAsync(customer.Email);
+        if (existing != null)
+            throw new InvalidOperationException("Customer with this email already exists.");
+
         var customerEntity = new Customer(customer.Name, customer.Email);
-        await _customerRepository.AddAsync(customerEntity);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await customerRepository.AddAsync(customerEntity);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return customerEntity.Id;
     }
