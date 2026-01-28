@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260124124208_AddOrders")]
-    partial class AddOrders
+    [Migration("20260128042523_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -312,6 +312,15 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         {
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("PriceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PriceCurrency");
 
                             b1.HasKey("ProductId");
 

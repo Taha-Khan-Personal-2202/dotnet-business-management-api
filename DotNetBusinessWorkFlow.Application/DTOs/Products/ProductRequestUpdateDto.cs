@@ -1,10 +1,10 @@
-﻿using DotNetBusinessWorkFlow.Application.Common;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Common;
 using DotNetBusinessWorkFlow.Domain.ValueObjects;
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Products;
 
-public class ProductRequestUpdateDto : AuditableEntityDto
+public class ProductRequestUpdateDto : BaseEntityDto
 {
-    public string Name { get; private set; }
-    public Money Price { get; private set; }
+    public string Name { get; set; } = default!;
+    public Money Price { get; set; } = default!;
 }

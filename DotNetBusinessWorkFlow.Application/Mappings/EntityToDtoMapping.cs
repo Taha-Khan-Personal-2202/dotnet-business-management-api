@@ -18,7 +18,7 @@ public static class EntityToDtoMapping
             IsActive = product.IsActive,
             Name = product.Name,
             Price = product.Price,
-            UpdateAt = product.UpdateAt
+            UpdateAt = product.UpdateAt,
         };
     }
 

@@ -10,11 +10,6 @@ public class GetAllProductsUseCase(IProductRepository repository) : IGetAllProdu
     public async Task<IReadOnlyList<ProductResponseDto>> ExecuteAsync()
     {
         var products = await _repository.GetAllAsync();
-        var returnList = new List<ProductResponseDto>();
-        foreach (var product in products)
-        {
-            returnList.Add(EntityToDtoMapping.MapProduct(product));
-        }
-        return returnList;
+        return products != null && products.Any() ? products.Select(EntityToDtoMapping.MapProduct).ToList() : new();
     }
 }

@@ -310,6 +310,15 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("uuid");
 
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("PriceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PriceCurrency");
+
                             b1.HasKey("ProductId");
 
                             b1.ToTable("Products");

@@ -4,6 +4,6 @@ namespace DotNetBusinessWorkFlow.Application.DTOs.Products;
 
 public class ProductRequestDto
 {
-    public string Name { get; private set; }
-    public Money Price { get; private set; }
+    public string Name { get; set; } = default!;
+    public Money Price { get; set; } = default!;
 }

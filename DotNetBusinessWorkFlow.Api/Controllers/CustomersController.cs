@@ -10,7 +10,7 @@ namespace DotNetBusinessWorkFlow.API.Controllers;
 
 [ApiController]
 [Route("api/customers")]
-[Authorize] // Base authorization
+[Authorize]
 public class CustomersController : ControllerBase
 {
     private readonly ICreateCustomerUseCase _createCustomer;

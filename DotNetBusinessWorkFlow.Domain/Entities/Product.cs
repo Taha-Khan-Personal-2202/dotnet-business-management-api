@@ -16,6 +16,14 @@ public class Product : AuditableEntity
         Name = name;
         Price = price;
         IsActive = true;
+        CreatedAt = DateTime.Now;
+    }
+
+    public void Update(string name, Money price)
+    {
+        Name = name;
+        Price = price;
+        MarkUpdated();
     }
 
     public void Deactivate()

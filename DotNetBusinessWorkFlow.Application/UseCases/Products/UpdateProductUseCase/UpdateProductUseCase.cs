@@ -4,8 +4,8 @@ using DotNetBusinessWorkFlow.Application.DTOs.Products;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
 
 public sealed class UpdateProductUseCase(
-        IProductRepository productRepository,
-        IUnitOfWork unitOfWork) : IUpdateProductUseCase
+    IProductRepository productRepository,
+    IUnitOfWork unitOfWork) : IUpdateProductUseCase
 {
     private readonly IProductRepository _productRepository = productRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -15,8 +15,10 @@ public sealed class UpdateProductUseCase(
         var product = await _productRepository.GetByIdAsync(request.Id)
             ?? throw new InvalidOperationException("Product not found.");
 
+        product.Update(request.Name, request.Price);
+
         await _productRepository.UpdateAsync(product);
-       
         await _unitOfWork.SaveChangesAsync();
     }
 }
+

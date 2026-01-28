@@ -10,6 +10,16 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.HasKey(p => p.Id);
         builder.OwnsOne(p => p.Price);
+        builder.OwnsOne(p => p.Price, price =>
+        {
+            price.Property(m => m.Amount)
+                 .HasColumnName("PriceAmount")
+                 .IsRequired();
+
+            price.Property(m => m.Currency)
+                 .HasColumnName("PriceCurrency")
+                 .IsRequired();
+        });
     }
 }
 

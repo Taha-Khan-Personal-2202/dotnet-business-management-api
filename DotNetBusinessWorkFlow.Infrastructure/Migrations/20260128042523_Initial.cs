@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddOrders : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,6 +80,8 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    PriceAmount = table.Column<decimal>(type: "numeric", nullable: false),
+                    PriceCurrency = table.Column<string>(type: "text", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -85,6 +89,23 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,11 +128,14 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
+            migrationBuilder.InsertData(
                 table: "Users",
-                column: "Email",
-                unique: true);
+                columns: new[] { "Id", "CreatedAt", "Email", "IsActive", "PasswordHash", "Role", "UpdateAt" },
+                values: new object[,]
+                {
+                    { new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@company.com", true, "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=", 1, null },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@company.com", true, "6DkpJamMnCJ5XR/F0N/uW5ppQ/a3aOxaKgwHfl7RGc8=", 2, null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_Email",
@@ -123,6 +147,12 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -144,11 +174,10 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Users");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Users_Email",
-                table: "Users");
+            migrationBuilder.DropTable(
+                name: "Orders");
         }
     }
 }

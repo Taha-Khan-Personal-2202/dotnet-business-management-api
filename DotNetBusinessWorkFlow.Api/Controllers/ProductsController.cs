@@ -48,9 +48,11 @@ public class ProductsController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(Guid productId, [FromBody] ProductRequestUpdateDto dto)
     {
+        dto.Id = productId;
         await _updateProduct.ExecuteAsync(dto);
         return Ok();
     }
+
 
     // DEACTIVATE PRODUCT
     [HttpPatch("{productId}/deactivate")]
