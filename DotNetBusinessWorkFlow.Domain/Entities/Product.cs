@@ -16,7 +16,7 @@ public class Product : AuditableEntity
         Name = name;
         Price = price;
         IsActive = true;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public void Update(string name, Money price)

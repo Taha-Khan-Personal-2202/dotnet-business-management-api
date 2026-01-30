@@ -21,7 +21,7 @@ public class Customer : AuditableEntity
         Name = name;
         Email = email;
         IsActive = true;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public void Update(string name, string email, bool isActive)
