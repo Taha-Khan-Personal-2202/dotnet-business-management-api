@@ -15,6 +15,17 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         builder.OwnsOne(o => o.TotalAmount);
 
+        builder.OwnsOne(p => p.TotalAmount, price =>
+        {
+            price.Property(m => m.Amount)
+                 .HasColumnName("PriceAmount")
+                 .IsRequired();
+
+            price.Property(m => m.Currency)
+                 .HasColumnName("PriceCurrency")
+                 .IsRequired();
+        });
+
         builder
             .HasMany(o => o.Items)
             .WithOne()

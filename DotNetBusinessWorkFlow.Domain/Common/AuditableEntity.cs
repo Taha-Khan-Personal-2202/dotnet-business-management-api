@@ -2,8 +2,17 @@
 
 public abstract class AuditableEntity : BaseEntity
 {
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdateAt { get; set; }
+    public DateTime CreatedAt { get; protected set; }
+    public DateTime? UpdateAt { get; protected set; }
 
-    public void MarkUpdated() => UpdateAt = DateTime.UtcNow;
+    protected void MarkCreated()
+    {
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    protected void MarkUpdated()
+    {
+        UpdateAt = DateTime.UtcNow;
+    }
 }
+

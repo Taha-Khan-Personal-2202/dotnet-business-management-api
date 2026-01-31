@@ -10,7 +10,7 @@ public static class EntityToDtoMapping
 {
     public static ProductResponseDto? MapProduct(Product? product)
     {
-        if(product == null) return null;
+        if (product == null) return null;
         return new ProductResponseDto()
         {
             CreatedAt = product.CreatedAt,
@@ -36,6 +36,22 @@ public static class EntityToDtoMapping
         };
     }
 
+    //public static OrderResponseDto MapOrder(Order order)
+    //{
+    //    return new OrderResponseDto
+    //    {
+    //        Id = order.Id,
+    //        CustomerId = order.CustomerId,
+    //        Status = order.Status,
+    //        TotalAmount = order.TotalAmount.Amount,
+    //        CreatedAt = order.CreatedAt,
+    //        UpdateAt = order.UpdateAt,
+    //        Items = order.Items
+    //            .Select(MapOrderItemEntityToDto)
+    //            .ToList()
+    //    };
+    //}
+
     public static OrderResponseDto MapOrder(Order order)
     {
         return new OrderResponseDto
@@ -44,13 +60,12 @@ public static class EntityToDtoMapping
             CustomerId = order.CustomerId,
             Status = order.Status,
             TotalAmount = order.TotalAmount.Amount,
+            Items = order.Items.Select(MapOrderItemEntityToDto).ToList(),
             CreatedAt = order.CreatedAt,
-            UpdateAt = order.UpdateAt,
-            Items = order.Items
-                .Select(MapOrderItemEntityToDto)
-                .ToList()
+            UpdateAt = order.UpdateAt
         };
     }
+
 
     private static OrderItemResponseDto MapOrderItemEntityToDto(OrderItem item)
     {

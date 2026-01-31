@@ -1,14 +1,19 @@
 ﻿using DotNetBusinessWorkFlow.Domain.Common;
 using DotNetBusinessWorkFlow.Domain.Enums;
 using DotNetBusinessWorkFlow.Domain.ValueObjects;
+using System.Text.Json.Serialization;
 
 namespace DotNetBusinessWorkflow.Domain.Entities;
 
 public class Order : AuditableEntity
 {
     public Guid CustomerId { get; private set; }
-    public OrderStatus Status { get; private set; }
-    public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public OrderStatus Status { get; set; }
+    
+    public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly(); 
+    
     public Money TotalAmount { get; private set; }
 
     private readonly List<OrderItem> _items = new();
@@ -19,8 +24,10 @@ public class Order : AuditableEntity
     {
         CustomerId = customerId;
         Status = OrderStatus.Created;
-        TotalAmount = new Money(1);
+        TotalAmount = Money.Zero("INR");
+        MarkCreated();
     }
+
 
     public void AddItem(OrderItem item)
     {
@@ -69,11 +76,9 @@ public class Order : AuditableEntity
 
     private void RecalculateTotal()
     {
-        Money total = _items.First().GetTotal();
-
-        foreach (var item in _items.Skip(1))
-            total += item.GetTotal();
-
-        TotalAmount = total;
+        TotalAmount = _items
+            .Select(i => i.GetTotal())
+            .Aggregate(Money.Zero("INR"), (acc, next) => acc + next);
     }
+
 }

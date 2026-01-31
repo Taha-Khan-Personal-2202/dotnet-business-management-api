@@ -3,13 +3,17 @@
 public sealed class Money
 {
     public decimal Amount { get; }
-    public string Currency { get; }
+    public string Currency { get; }s
 
     private Money() { }
 
+    public static Money Zero(string currency)
+    => new Money(0, currency);
+
+
     public Money(decimal amount, string currency = "INR")
     {
-        if (amount <= 0)
+        if (amount < 0)
             throw new ArgumentException("Amount must be greater than zero.");
 
         Amount = amount;

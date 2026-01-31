@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.CreateOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.AddOrderItem;
@@ -14,6 +15,7 @@ namespace DotNetBusinessWorkFlow.API.Controllers;
 
 [ApiController]
 [Route("api/orders")]
+[Authorize] // Base: user must be authenticated
 public class OrdersController : ControllerBase
 {
     private readonly ICreateOrderUseCase _createOrder;
@@ -48,7 +50,6 @@ public class OrdersController : ControllerBase
         _getOrdersByCustomer = getOrdersByCustomer;
     }
 
-    // CREATE ORDER
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] OrderRequestDto dto)
     {
@@ -56,7 +57,6 @@ public class OrdersController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { orderId = result.Id }, result);
     }
 
-    // ADD ITEM
     [HttpPost("{orderId}/items")]
     public async Task<IActionResult> AddItem(
         Guid orderId,
@@ -67,15 +67,14 @@ public class OrdersController : ControllerBase
         return Ok(result);
     }
 
-    // CONFIRM ORDER
     [HttpPost("{orderId}/confirm")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Confirm(Guid orderId)
     {
         var result = await _confirmOrder.ExecuteAsync(orderId);
         return Ok(result);
     }
 
-    // PAY ORDER
     [HttpPost("{orderId}/pay")]
     public async Task<IActionResult> Pay(Guid orderId)
     {
@@ -83,15 +82,14 @@ public class OrdersController : ControllerBase
         return Ok(result);
     }
 
-    // COMPLETE ORDER
     [HttpPost("{orderId}/complete")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Complete(Guid orderId)
     {
         var result = await _completeOrder.ExecuteAsync(orderId);
         return Ok(result);
     }
 
-    // CANCEL ORDER
     [HttpPost("{orderId}/cancel")]
     public async Task<IActionResult> Cancel(Guid orderId)
     {
@@ -99,7 +97,6 @@ public class OrdersController : ControllerBase
         return Ok(result);
     }
 
-    // GET BY ID
     [HttpGet("{orderId}")]
     public async Task<IActionResult> GetById(Guid orderId)
     {
@@ -107,15 +104,14 @@ public class OrdersController : ControllerBase
         return result == null ? NotFound() : Ok(result);
     }
 
-    // GET ALL
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAllOrders.ExecuteAsync();
         return Ok(result);
     }
 
-    // GET BY CUSTOMER
     [HttpGet("customer/{customerId}")]
     public async Task<IActionResult> GetByCustomer(Guid customerId)
     {

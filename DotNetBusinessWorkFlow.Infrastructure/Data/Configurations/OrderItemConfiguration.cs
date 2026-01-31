@@ -14,5 +14,16 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
                .IsRequired();
 
         builder.OwnsOne(oi => oi.UnitPrice);
+
+        builder.OwnsOne(p => p.UnitPrice, price =>
+        {
+            price.Property(m => m.Amount)
+                 .HasColumnName("PriceAmount")
+                 .IsRequired();
+
+            price.Property(m => m.Currency)
+                 .HasColumnName("PriceCurrency")
+                 .IsRequired();
+        });
     }
 }
