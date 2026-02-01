@@ -5,6 +5,9 @@ using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCa
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByEmailUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByIdUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.UpdateCustomerUseCase;
+using DotNetBusinessWorkFlow.Application.UseCases.Invoices.CreateInvoice;
+using DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetAllInvoices;
+using DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetInvoiceById;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.AddOrderItem;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.CancelOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.CompleteOrder;
@@ -59,6 +62,11 @@ public static class DependencyInjection
         // Payment Use Cases
         services.AddScoped<ICreatePaymentUseCase, CreatePaymentUseCase>();
         services.AddScoped<IGetPaymentUseCase, GetPaymentUseCase>();
+
+        // Invoice Use Cases
+        services.AddScoped<ICreateInvoiceUseCase, CreateInvoiceUseCase>();
+        services.AddScoped<IGetAllInvoicesUseCase, GetAllInvoicesUseCase>();
+        services.AddScoped<IGetInvoiceByIdUseCase, GetInvoiceByIdUseCase>();
 
         return services;
     }

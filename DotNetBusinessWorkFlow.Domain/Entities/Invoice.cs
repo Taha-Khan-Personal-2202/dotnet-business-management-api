@@ -1,5 +1,4 @@
 ﻿using DotNetBusinessWorkFlow.Domain.Common;
-using DotNetBusinessWorkFlow.Domain.Enums;
 using DotNetBusinessWorkFlow.Domain.ValueObjects;
 
 namespace DotNetBusinessWorkFlow.Domain.Entities;
@@ -7,21 +6,25 @@ namespace DotNetBusinessWorkFlow.Domain.Entities;
 public class Invoice : AuditableEntity
 {
     public Guid OrderId { get; private set; }
-    public Money Amount { get; private set; }
-    public InvoiceStatus Status { get; private set; }
+    public Guid CustomerId { get; private set; }
+    public string InvoiceNumber { get; private set; }
+    public Money TotalAmount { get; private set; }
+    public DateTime IssuedAt { get; private set; }
 
     private Invoice() { }
 
-    public Invoice(Guid orderId, Money amount)
+    public Invoice(Guid orderId, Guid customerId, Money totalAmount)
     {
         OrderId = orderId;
-        Amount = amount;
-        Status = InvoiceStatus.Pending;
+        CustomerId = customerId;
+        TotalAmount = totalAmount;
+        IssuedAt = DateTime.UtcNow;
+        InvoiceNumber = GenerateInvoiceNumber();
+        CreatedAt = DateTime.UtcNow;
     }
 
-    public void MarkAsPaid()
+    private static string GenerateInvoiceNumber()
     {
-        Status = InvoiceStatus.Paid;
-        MarkUpdated();
+        return $"INV-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..6]}";
     }
 }

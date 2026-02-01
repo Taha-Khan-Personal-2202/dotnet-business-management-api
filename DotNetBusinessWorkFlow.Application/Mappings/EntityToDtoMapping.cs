@@ -1,8 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Domain.Entities;
-using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
 using DotNetBusinessWorkFlow.Application.DTOs.OrderItem;
 using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
+using DotNetBusinessWorkFlow.Domain.Entities;
 
 namespace DotNetBusinessWorkFlow.Application.Mappings;
 
@@ -58,6 +59,21 @@ public static class EntityToDtoMapping
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice.Amount,
             TotalPrice = item.GetTotal().Amount
+        };
+    }
+
+    public static InvoiceResponseDto MapInvoice(Invoice invoice)
+    {
+        return new InvoiceResponseDto
+        {
+            Id = invoice.Id,
+            OrderId = invoice.OrderId,
+            CustomerId = invoice.CustomerId,
+            InvoiceNumber = invoice.InvoiceNumber,
+            TotalAmount = invoice.TotalAmount.Amount,
+            IssuedAt = invoice.IssuedAt,
+            CreatedAt = invoice.CreatedAt,
+            UpdateAt = invoice.UpdateAt
         };
     }
 }
