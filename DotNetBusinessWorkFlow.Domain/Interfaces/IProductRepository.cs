@@ -1,6 +1,6 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 
-namespace DotNetBusinessWorkflow.Domain.Repositories;
+namespace DotNetBusinessWorkFlow.Domain.Repositories;
 
 public interface IProductRepository
 {

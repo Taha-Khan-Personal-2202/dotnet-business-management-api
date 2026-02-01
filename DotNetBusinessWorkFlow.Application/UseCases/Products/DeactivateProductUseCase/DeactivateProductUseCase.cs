@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Repositories;
+﻿using DotNetBusinessWorkFlow.Domain.Repositories;
 using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseCase;

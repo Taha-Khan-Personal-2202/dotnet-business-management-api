@@ -1,5 +1,5 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
-using DotNetBusinessWorkflow.Domain.Repositories;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
+using DotNetBusinessWorkFlow.Domain.Repositories;
 using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
 

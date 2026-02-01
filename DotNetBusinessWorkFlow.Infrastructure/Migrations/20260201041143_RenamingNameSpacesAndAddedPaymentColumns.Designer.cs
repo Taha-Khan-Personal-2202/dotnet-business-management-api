@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260128042523_Initial")]
-    partial class Initial
+    [Migration("20260201041143_RenamingNameSpacesAndAddedPaymentColumns")]
+    partial class RenamingNameSpacesAndAddedPaymentColumns
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,7 +133,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("InvoiceId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -251,6 +251,15 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
 
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("PriceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PriceCurrency");
+
                             b1.HasKey("OrderId");
 
                             b1.ToTable("Orders");
@@ -274,6 +283,15 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         {
                             b1.Property<Guid>("OrderItemId")
                                 .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("PriceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PriceCurrency");
 
                             b1.HasKey("OrderItemId");
 

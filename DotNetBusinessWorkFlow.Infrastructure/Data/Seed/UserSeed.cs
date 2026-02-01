@@ -1,9 +1,9 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 using DotNetBusinessWorkFlow.Domain.Enums;
 using DotNetBusinessWorkFlow.Infrastructure.Authentication;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNetBusinessWorkflow.Infrastructure.Data.Seed;
+namespace DotNetBusinessWorkFlow.Infrastructure.Data.Seed;
 
 public static class UserSeed
 {

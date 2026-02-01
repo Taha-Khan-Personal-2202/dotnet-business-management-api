@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 using DotNetBusinessWorkFlow.Application.DTOs.OrderItem;
 using DotNetBusinessWorkFlow.Application.DTOs.Orders;
@@ -36,22 +36,6 @@ public static class EntityToDtoMapping
         };
     }
 
-    //public static OrderResponseDto MapOrder(Order order)
-    //{
-    //    return new OrderResponseDto
-    //    {
-    //        Id = order.Id,
-    //        CustomerId = order.CustomerId,
-    //        Status = order.Status,
-    //        TotalAmount = order.TotalAmount.Amount,
-    //        CreatedAt = order.CreatedAt,
-    //        UpdateAt = order.UpdateAt,
-    //        Items = order.Items
-    //            .Select(MapOrderItemEntityToDto)
-    //            .ToList()
-    //    };
-    //}
-
     public static OrderResponseDto MapOrder(Order order)
     {
         return new OrderResponseDto
@@ -66,7 +50,6 @@ public static class EntityToDtoMapping
         };
     }
 
-
     private static OrderItemResponseDto MapOrderItemEntityToDto(OrderItem item)
     {
         return new OrderItemResponseDto
@@ -77,6 +60,4 @@ public static class EntityToDtoMapping
             TotalPrice = item.GetTotal().Amount
         };
     }
-
-
 }

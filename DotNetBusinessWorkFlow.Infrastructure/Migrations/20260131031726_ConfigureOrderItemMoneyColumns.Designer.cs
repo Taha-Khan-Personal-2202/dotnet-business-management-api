@@ -25,7 +25,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Customer", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Invoice", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Invoice", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Order", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,7 +102,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,7 +124,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Payment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +147,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Product", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,7 +171,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.User", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,7 +225,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Invoice", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Invoice", b =>
                 {
                     b.OwnsOne("DotNetBusinessWorkFlow.Domain.ValueObjects.Money", "Amount", b1 =>
                         {
@@ -244,7 +244,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Order", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Order", b =>
                 {
                     b.OwnsOne("DotNetBusinessWorkFlow.Domain.ValueObjects.Money", "TotalAmount", b1 =>
                         {
@@ -272,9 +272,9 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("DotNetBusinessWorkflow.Domain.Entities.Order", null)
+                    b.HasOne("DotNetBusinessWorkFlow.Domain.Entities.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -305,7 +305,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Payment", b =>
                 {
                     b.OwnsOne("DotNetBusinessWorkFlow.Domain.ValueObjects.Money", "Amount", b1 =>
                         {
@@ -324,7 +324,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Product", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Product", b =>
                 {
                     b.OwnsOne("DotNetBusinessWorkFlow.Domain.ValueObjects.Money", "Price", b1 =>
                         {
@@ -352,7 +352,7 @@ namespace DotNetBusinessWorkFlow.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DotNetBusinessWorkflow.Domain.Entities.Order", b =>
+            modelBuilder.Entity("DotNetBusinessWorkFlow.Domain.Entities.Order", b =>
                 {
                     b.Navigation("Items");
                 });

@@ -1,7 +1,7 @@
 ﻿using DotNetBusinessWorkFlow.Domain.Common;
 using DotNetBusinessWorkFlow.Domain.Enums;
 
-namespace DotNetBusinessWorkflow.Domain.Entities;
+namespace DotNetBusinessWorkFlow.Domain.Entities;
 
 public class User : AuditableEntity
 {

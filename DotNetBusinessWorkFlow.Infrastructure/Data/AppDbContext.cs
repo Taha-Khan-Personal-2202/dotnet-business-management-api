@@ -1,5 +1,5 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
-using DotNetBusinessWorkflow.Infrastructure.Data.Seed;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
+using DotNetBusinessWorkFlow.Infrastructure.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetBusinessWorkFlow.Infrastructure.Data;

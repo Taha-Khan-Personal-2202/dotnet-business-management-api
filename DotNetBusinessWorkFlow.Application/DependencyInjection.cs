@@ -14,6 +14,8 @@ using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetAllOrders;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrdersByCustomer;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Payments.CreatePayment;
+using DotNetBusinessWorkFlow.Application.UseCases.Payments.GetPaymentByOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.CreateProductUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.GetAllProductsUseCase;
@@ -54,6 +56,9 @@ public static class DependencyInjection
         services.AddScoped<IGetAllOrdersUseCase, GetAllOrdersUseCase>();
         services.AddScoped<IGetOrdersByCustomerUseCase, GetOrdersByCustomerUseCase>();
 
+        // Payment Use Cases
+        services.AddScoped<ICreatePaymentUseCase, CreatePaymentUseCase>();
+        services.AddScoped<IGetPaymentUseCase, GetPaymentUseCase>();
 
         return services;
     }

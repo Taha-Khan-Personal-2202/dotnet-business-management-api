@@ -3,7 +3,7 @@
 public sealed class Money
 {
     public decimal Amount { get; }
-    public string Currency { get; }s
+    public string Currency { get; }
 
     private Money() { }
 

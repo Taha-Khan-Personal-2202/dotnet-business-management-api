@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

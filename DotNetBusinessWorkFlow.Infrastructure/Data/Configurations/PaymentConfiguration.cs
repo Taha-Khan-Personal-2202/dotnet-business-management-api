@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,5 +10,16 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
     {
         builder.HasKey(p => p.Id);
         builder.OwnsOne(p => p.Amount);
+
+        builder.OwnsOne(p => p.Amount, price =>
+        {
+            price.Property(m => m.Amount)
+                 .HasColumnName("PriceAmount")
+                 .IsRequired();
+
+            price.Property(m => m.Currency)
+                 .HasColumnName("PriceCurrency")
+                 .IsRequired();
+        });
     }
 }

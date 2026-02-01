@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Repositories;
+﻿using DotNetBusinessWorkFlow.Domain.Repositories;
 using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;

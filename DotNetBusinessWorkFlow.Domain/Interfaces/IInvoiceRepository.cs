@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 
 namespace DotNetBusinessWorkFlow.Domain.Interfaces;
 public interface IInvoiceRepository

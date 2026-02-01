@@ -1,5 +1,5 @@
-﻿using DotNetBusinessWorkflow.Domain.Repositories;
-using DotNetBusinessWorkflow.Infrastructure.Authentication;
+﻿using DotNetBusinessWorkFlow.Domain.Repositories;
+using DotNetBusinessWorkFlow.Infrastructure.Authentication;
 using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
 using DotNetBusinessWorkFlow.Infrastructure.Authentication;
@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }

@@ -1,4 +1,4 @@
-﻿using DotNetBusinessWorkflow.Domain.Entities;
+﻿using DotNetBusinessWorkFlow.Domain.Entities;
 using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace DotNetBusinessWorkflow.Infrastructure.Authentication;
+namespace DotNetBusinessWorkFlow.Infrastructure.Authentication;
 
 public class JwtTokenGenerator(IConfiguration config) : IJwtTokenGenerator
 {
