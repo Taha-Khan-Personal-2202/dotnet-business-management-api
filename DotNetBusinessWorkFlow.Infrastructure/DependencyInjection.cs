@@ -1,9 +1,11 @@
-﻿using DotNetBusinessWorkFlow.Domain.Repositories;
-using DotNetBusinessWorkFlow.Infrastructure.Authentication;
-using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
+using DotNetBusinessWorkFlow.Domain.Repositories;
+using DotNetBusinessWorkFlow.Infrastructure.Authentication;
 using DotNetBusinessWorkFlow.Infrastructure.Data;
 using DotNetBusinessWorkFlow.Infrastructure.Repositories;
+using DotNetBusinessWorkFlow.Infrastructure.Services.Email;
+using DotNetBusinessWorkFlow.Infrastructure.Services.Pdf;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,13 @@ public static class DependencyInjection
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.Configure<EmailSettings>(configuration.GetSection("Email"));
+
+        services.AddScoped<IInvoicePdfGenerator, InvoicePdfGenerator>();
+        services.AddScoped<IEmailSender, SmtpEmailSender>();
+
+        QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
         return services;
     }
 }

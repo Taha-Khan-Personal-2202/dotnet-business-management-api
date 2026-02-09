@@ -8,6 +8,7 @@ using DotNetBusinessWorkFlow.Application.UseCases.Customers.UpdateCustomerUseCas
 using DotNetBusinessWorkFlow.Application.UseCases.Invoices.CreateInvoice;
 using DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetAllInvoices;
 using DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetInvoiceById;
+using DotNetBusinessWorkFlow.Application.UseCases.Invoices.SendInvoiceEmail;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.AddOrderItem;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.CancelOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.CompleteOrder;
@@ -24,6 +25,7 @@ using DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseC
 using DotNetBusinessWorkFlow.Application.UseCases.Products.GetAllProductsUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.GetProductByIdUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
+using DotNetBusinessWorkFlow.Application.UseCases.SendInvoiceEmail;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotNetBusinessWorkFlow.Application;
@@ -67,6 +69,9 @@ public static class DependencyInjection
         services.AddScoped<ICreateInvoiceUseCase, CreateInvoiceUseCase>();
         services.AddScoped<IGetAllInvoicesUseCase, GetAllInvoicesUseCase>();
         services.AddScoped<IGetInvoiceByIdUseCase, GetInvoiceByIdUseCase>();
+
+        // Invoice Email
+        services.AddScoped<ISendInvoiceEmailUseCase, SendInvoiceEmailUseCase>();
 
         return services;
     }

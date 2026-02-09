@@ -14,31 +14,28 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(i => i.OrderId)
-            .IsRequired();
-
-        builder.Property(i => i.CustomerId)
-            .IsRequired();
-
-        builder.Property(i => i.IssuedAt)
-            .IsRequired();
-
-        builder.OwnsOne(i => i.TotalAmount, money =>
-             {
-                 money.Property(m => m.Amount)
-                     .HasColumnName("TotalAmount")
-                     .IsRequired();
-
-                 money.Property(m => m.Currency)
-                     .HasColumnName("Currency")
-                     .HasMaxLength(3)
-                     .IsRequired();
-             });
-
         builder.HasIndex(i => i.InvoiceNumber)
             .IsUnique();
 
-        builder.HasIndex(i => i.OrderId)
-            .IsUnique();
+        builder.Property(i => i.OrderId).IsRequired();
+        builder.Property(i => i.CustomerId).IsRequired();
+        builder.Property(i => i.IssuedAt).IsRequired();
+
+        builder.OwnsOne(i => i.TotalAmount, money =>
+        {
+            money.Property(m => m.Amount)
+                .HasColumnName("TotalAmount")
+                .IsRequired();
+
+            money.Property(m => m.Currency)
+                .HasColumnName("Currency")
+                .HasMaxLength(3)
+                .IsRequired();
+        });
+
+        builder.HasMany(i => i.Items)
+            .WithOne()
+            .HasForeignKey("InvoiceId")
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

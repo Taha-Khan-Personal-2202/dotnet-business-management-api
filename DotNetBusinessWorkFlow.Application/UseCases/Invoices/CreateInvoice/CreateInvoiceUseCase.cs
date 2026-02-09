@@ -28,8 +28,7 @@ public class CreateInvoiceUseCase(
 
         var invoice = new Invoice(
             order.Id,
-            order.CustomerId,
-            order.TotalAmount
+            order.CustomerId
         );
 
         await invoiceRepository.AddAsync(invoice);
