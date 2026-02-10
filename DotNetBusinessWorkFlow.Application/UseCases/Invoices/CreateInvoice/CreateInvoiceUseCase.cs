@@ -9,6 +9,7 @@ using DotNetBusinessWorkFlow.Domain.Repositories;
 namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.CreateInvoice;
 
 public class CreateInvoiceUseCase(
+    IProductRepository productRepository,
     IOrderRepository orderRepository,
     IInvoiceRepository invoiceRepository,
     IUnitOfWork unitOfWork
@@ -30,6 +31,14 @@ public class CreateInvoiceUseCase(
             order.Id,
             order.CustomerId
         );
+
+        foreach (var item in order.Items)
+        {
+            var product = await productRepository.GetByIdAsync(item.ProductId);
+            invoice.AddItem(product.Name,
+                item.Quantity,
+                item.UnitPrice);
+        }
 
         await invoiceRepository.AddAsync(invoice);
         await unitOfWork.SaveChangesAsync();

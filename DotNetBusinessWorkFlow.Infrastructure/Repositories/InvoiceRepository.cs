@@ -16,16 +16,22 @@ public class InvoiceRepository(AppDbContext context) : IInvoiceRepository
 
     public async Task<Invoice?> GetByIdAsync(Guid id)
     {
-        return await _context.Invoices.FirstOrDefaultAsync(i => i.Id == id);
+        return await _context.Invoices
+                    .Include(s => s.Items)
+                    .FirstOrDefaultAsync(f => f.Id == id);
     }
 
     public async Task<Invoice?> GetByOrderIdAsync(Guid orderId)
     {
-        return await _context.Invoices.FirstOrDefaultAsync(i => i.OrderId == orderId);
+        return await _context.Invoices.
+                    Include(i => i.Items)
+                    .FirstOrDefaultAsync(i => i.OrderId == orderId);
     }
 
     public async Task<IEnumerable<Invoice>> GetAllAsync()
     {
-        return await _context.Invoices.ToListAsync();
+        return await _context.Invoices
+                    .Include(i => i.Items)
+                    .ToListAsync();
     }
 }

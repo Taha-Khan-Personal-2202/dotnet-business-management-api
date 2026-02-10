@@ -10,7 +10,7 @@ public class InvoiceItem : BaseEntity
     public Money UnitPrice { get; private set; }
     public Money TotalPrice { get; private set; }
 
-    private InvoiceItem() { }
+    public InvoiceItem() { }
 
     public InvoiceItem(string productName, int quantity, Money unitPrice)
     {
