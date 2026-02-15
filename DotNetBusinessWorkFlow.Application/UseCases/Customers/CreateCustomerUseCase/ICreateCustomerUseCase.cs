@@ -1,9 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Domain.Entities;
-using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.CreateCustomerUseCase;
 
 public interface ICreateCustomerUseCase
 {
-    Task<Guid> ExecuteAsync(CustomerRequestDto customer, CancellationToken cancellationToken = default);
+    Task<OperationResult<Guid>> ExecuteAsync(CustomerRequestDto customer, CancellationToken cancellationToken = default);
 }

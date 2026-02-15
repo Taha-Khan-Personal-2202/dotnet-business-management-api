@@ -36,7 +36,7 @@ public class CustomersController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CustomerRequestDto dto)
     {
         var result = await _createCustomer.ExecuteAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { customerId = result }, result);
+        return StatusCode(result.StatusCode, result);
     }
 
     // UPDATE CUSTOMER

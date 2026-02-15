@@ -1,8 +1,9 @@
 ﻿using DotNetBusinessWorkFlow.Application.DTOs.Auth;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
 
 namespace DotNetBusinessWorkFlow.Application.Common.Interfaces;
 
 public interface ILoginService 
 {
-    Task<LoginResponseDto> ExecuteAsync(LoginRequestDto dto);
+    Task<OperationResult<LoginResponseDto>> ExecuteAsync(LoginRequestDto dto);
 }

@@ -26,6 +26,7 @@ using DotNetBusinessWorkFlow.Application.UseCases.Products.GetAllProductsUseCase
 using DotNetBusinessWorkFlow.Application.UseCases.Products.GetProductByIdUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.SendInvoiceEmail;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotNetBusinessWorkFlow.Application;
@@ -35,6 +36,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<ILoginService, LoginUseCase>();
+
+        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
         // Product Use Cases
         services.AddScoped<ICreateProductUseCase, CreateProductUseCase>();

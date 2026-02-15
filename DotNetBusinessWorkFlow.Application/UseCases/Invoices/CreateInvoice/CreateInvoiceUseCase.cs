@@ -35,7 +35,7 @@ public class CreateInvoiceUseCase(
         foreach (var item in order.Items)
         {
             var product = await productRepository.GetByIdAsync(item.ProductId);
-            invoice.AddItem(product.Name,
+            invoice.AddItem(product?.Name ?? string.Empty,
                 item.Quantity,
                 item.UnitPrice);
         }

@@ -1,6 +1,5 @@
 ﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.DTOs.Auth;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetBusinessWorkFlow.Api.Controllers
@@ -15,7 +14,7 @@ namespace DotNetBusinessWorkFlow.Api.Controllers
         public async Task<IActionResult> Login(LoginRequestDto dto)
         {
             var result = await _login.ExecuteAsync(dto);
-            return Ok(result);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }
