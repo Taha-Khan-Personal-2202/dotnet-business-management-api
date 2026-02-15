@@ -1,8 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Orders;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.AddOrderItem;
 
 public interface IAddOrderItemUseCase
 {
-    Task<OrderResponseDto> ExecuteAsync(Guid orderId, Guid productId, int quantity);
+    Task<OperationResult<OrderResponseDto>> ExecuteAsync(Guid orderId, Guid productId, int quantity);
 }

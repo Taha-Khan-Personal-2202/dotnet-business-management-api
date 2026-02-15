@@ -1,4 +1,5 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
 using DotNetBusinessWorkFlow.Application.Mappings;
 using DotNetBusinessWorkFlow.Domain.Repositories;
 
@@ -8,9 +9,9 @@ public class GetAllInvoicesUseCase(
     IInvoiceRepository invoiceRepository
 ) : IGetAllInvoicesUseCase
 {
-    public async Task<IEnumerable<InvoiceResponseDto>> ExecuteAsync()
+    public async Task<OperationResult<IEnumerable<InvoiceResponseDto>>> ExecuteAsync()
     {
-        var invoices = await invoiceRepository.GetAllAsync();
-        return invoices.Select(EntityToDtoMapping.MapInvoice);
+        var invoices = (await invoiceRepository.GetAllAsync()).Select(EntityToDtoMapping.MapInvoice).ToList();
+        return OperationResult<IEnumerable<InvoiceResponseDto>>.Succces(invoices, "Invoices fetched successfully.");
     }
 }

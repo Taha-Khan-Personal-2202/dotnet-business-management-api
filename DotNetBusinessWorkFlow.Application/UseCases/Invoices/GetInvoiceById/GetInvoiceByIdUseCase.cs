@@ -1,4 +1,5 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
 using DotNetBusinessWorkFlow.Application.Mappings;
 using DotNetBusinessWorkFlow.Domain.Repositories;
 
@@ -8,9 +9,11 @@ public class GetInvoiceByIdUseCase(
     IInvoiceRepository invoiceRepository
 ) : IGetInvoiceByIdUseCase
 {
-    public async Task<InvoiceResponseDto?> ExecuteAsync(Guid invoiceId)
+    public async Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid invoiceId)
     {
         var invoice = await invoiceRepository.GetByIdAsync(invoiceId);
-        return invoice == null ? null : EntityToDtoMapping.MapInvoice(invoice);
+        return invoice is null
+            ? OperationResult<InvoiceResponseDto>.Fail("Invoice not found.", 404)
+            : OperationResult<InvoiceResponseDto>.Succces(EntityToDtoMapping.MapInvoice(invoice), "Invoice fetched successfully.");
     }
 }

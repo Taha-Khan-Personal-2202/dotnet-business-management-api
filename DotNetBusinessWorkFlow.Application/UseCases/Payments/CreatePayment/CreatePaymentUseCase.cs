@@ -1,6 +1,8 @@
-﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
 using DotNetBusinessWorkFlow.Application.DTOs.Payments;
 using DotNetBusinessWorkFlow.Domain.Entities;
+using DotNetBusinessWorkFlow.Domain.Enums;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Payments.CreatePayment;
@@ -11,17 +13,24 @@ public class CreatePaymentUseCase(
     IUnitOfWork unitOfWork
 ) : ICreatePaymentUseCase
 {
-    public async Task<PaymentResponseDto> ExecuteAsync(PaymentRequestDto dto)
+    public async Task<OperationResult<PaymentResponseDto>> ExecuteAsync(PaymentRequestDto dto)
     {
-        var order = await orderRepository.GetByIdAsync(dto.OrderId)
-            ?? throw new Exception("Order not found.");
+        var order = await orderRepository.GetByIdAsync(dto.OrderId);
+        if (order is null)
+        {
+            return OperationResult<PaymentResponseDto>.Fail("Order not found.", 404);
+        }
 
-        if (order.Status != Domain.Enums.OrderStatus.Confirmed)
-            throw new Exception("Only confirmed orders can be paid.");
+        if (order.Status != OrderStatus.Confirmed)
+        {
+            return OperationResult<PaymentResponseDto>.Fail("Only confirmed orders can be paid.", 400);
+        }
 
         var existingPayment = await paymentRepository.GetByOrderIdAsync(dto.OrderId);
         if (existingPayment != null)
-            throw new Exception("Payment already exists.");
+        {
+            return OperationResult<PaymentResponseDto>.Fail("Payment already exists.", 409);
+        }
 
         var payment = new Payment(dto.OrderId, dto.Amount);
         payment.MarkAsPaid();
@@ -31,7 +40,7 @@ public class CreatePaymentUseCase(
 
         await unitOfWork.SaveChangesAsync();
 
-        return new PaymentResponseDto
+        var response = new PaymentResponseDto
         {
             Id = payment.Id,
             OrderId = payment.OrderId,
@@ -39,5 +48,7 @@ public class CreatePaymentUseCase(
             Status = payment.Status,
             CreatedAt = payment.CreatedAt
         };
+
+        return OperationResult<PaymentResponseDto>.Succces(response, "Payment created successfully.", 201);
     }
 }

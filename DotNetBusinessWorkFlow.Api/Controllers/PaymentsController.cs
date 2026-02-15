@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using DotNetBusinessWorkFlow.Application.DTOs.Payments;
 using DotNetBusinessWorkFlow.Application.UseCases.Payments.CreatePayment;
 using DotNetBusinessWorkFlow.Application.UseCases.Payments.GetPaymentByOrder;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetBusinessWorkFlow.API.Controllers;
 
 [ApiController]
-[Route("api/payments")]
+[Route("api/[controller]")]
 [Authorize]
 public class PaymentsController : ControllerBase
 {
@@ -22,21 +22,19 @@ public class PaymentsController : ControllerBase
         _getByOrder = getByOrder;
     }
 
-    // PAY ORDER
     [HttpPost]
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Pay([FromBody] PaymentRequestDto dto)
     {
         var result = await _createPayment.ExecuteAsync(dto);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // GET PAYMENT BY ORDER
     [HttpGet("order/{orderId}")]
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> GetByOrder(Guid orderId)
     {
         var result = await _getByOrder.ExecuteAsync(orderId);
-        return result == null ? NotFound() : Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 }

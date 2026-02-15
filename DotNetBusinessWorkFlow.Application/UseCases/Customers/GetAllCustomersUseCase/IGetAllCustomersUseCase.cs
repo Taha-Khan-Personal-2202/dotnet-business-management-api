@@ -1,8 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCase;
 
 public interface IGetAllCustomersUseCase
 {
-    Task<IEnumerable<CustomerResponseDto>> ExecuteAsync();
+    Task<OperationResult<IEnumerable<CustomerResponseDto>>> ExecuteAsync();
 }

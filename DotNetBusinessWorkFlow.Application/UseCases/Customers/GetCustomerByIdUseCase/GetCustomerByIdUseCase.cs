@@ -1,4 +1,5 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 using DotNetBusinessWorkFlow.Application.Mappings;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
 
@@ -10,8 +11,11 @@ public class GetCustomerByIdUseCase(
 {
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
-    public async Task<CustomerResponseDto?> ExecuteAsync(Guid id)
+    public async Task<OperationResult<CustomerResponseDto>> ExecuteAsync(Guid id)
     {
-        return EntityToDtoMapping.MapCustomer(await _customerRepository.GetByIdAsync(id));
+        var customer = EntityToDtoMapping.MapCustomer(await _customerRepository.GetByIdAsync(id));
+        return customer is null
+            ? OperationResult<CustomerResponseDto>.Fail("Customer not found.", 404)
+            : OperationResult<CustomerResponseDto>.Succces(customer, "Customer fetched successfully.");
     }
 }

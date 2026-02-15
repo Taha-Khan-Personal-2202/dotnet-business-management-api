@@ -1,6 +1,8 @@
-﻿namespace DotNetBusinessWorkFlow.Application.UseCases.SendInvoiceEmail;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+
+namespace DotNetBusinessWorkFlow.Application.UseCases.SendInvoiceEmail;
 
 public interface ISendInvoiceEmailUseCase
 {
-    Task ExecuteAsync(Guid invoiceId);
+    Task<OperationResult<bool>> ExecuteAsync(Guid invoiceId);
 }

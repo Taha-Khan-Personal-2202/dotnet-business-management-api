@@ -1,9 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Products;
-using DotNetBusinessWorkFlow.Domain.ValueObjects;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Products;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Products.CreateProductUseCase;
 
 public interface ICreateProductUseCase
 {
-    Task<Guid> ExecuteAsync(ProductRequestDto request);
+    Task<OperationResult<Guid>> ExecuteAsync(ProductRequestDto request);
 }

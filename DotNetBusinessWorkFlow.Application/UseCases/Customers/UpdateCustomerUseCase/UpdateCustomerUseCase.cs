@@ -1,4 +1,5 @@
 ﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
 using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
 
@@ -9,10 +10,13 @@ public class UpdateCustomerUseCase(
     IUnitOfWork unitOfWork
 ) : IUpdateCustomerUseCase
 {
-    public async Task ExecuteAsync(Guid customerId, CustomerRequestUpdateDto request)
+    public async Task<OperationResult<bool>> ExecuteAsync(Guid customerId, CustomerRequestUpdateDto request)
     {
-        var customer = await customerRepository.GetByIdAsync(customerId)
-            ?? throw new InvalidOperationException("Customer not found.");
+        var customer = await customerRepository.GetByIdAsync(customerId);
+        if (customer is null)
+        {
+            return OperationResult<bool>.Fail("Customer not found.", 404);
+        }
 
         customer.Update(
             request.Name,
@@ -21,5 +25,6 @@ public class UpdateCustomerUseCase(
         );
 
         await unitOfWork.SaveChangesAsync();
+        return OperationResult<bool>.Succces(true, "Customer updated successfully.");
     }
 }

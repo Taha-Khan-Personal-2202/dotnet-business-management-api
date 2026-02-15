@@ -1,4 +1,5 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 using DotNetBusinessWorkFlow.Application.Mappings;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
 
@@ -10,13 +11,12 @@ public class GetAllCustomersUseCase(
 {
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
-    public async Task<IEnumerable<CustomerResponseDto>> ExecuteAsync()
+    public async Task<OperationResult<IEnumerable<CustomerResponseDto>>> ExecuteAsync()
     {
-        var customers = await _customerRepository.GetAllAsync();
-
-        return customers
+        var customers = (await _customerRepository.GetAllAsync())
             .Select(EntityToDtoMapping.MapCustomer)
             .ToList();
-    }
 
+        return OperationResult<IEnumerable<CustomerResponseDto>>.Succces(customers, "Customers fetched successfully.");
+    }
 }

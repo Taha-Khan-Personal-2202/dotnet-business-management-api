@@ -1,5 +1,6 @@
-﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.Common.Models;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
 using DotNetBusinessWorkFlow.Application.UseCases.SendInvoiceEmail;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
 using DotNetBusinessWorkFlow.Domain.Repositories;
@@ -13,14 +14,19 @@ public class SendInvoiceEmailUseCase(
     IEmailSender emailSender
 ) : ISendInvoiceEmailUseCase
 {
-    public async Task ExecuteAsync(Guid invoiceId)
+    public async Task<OperationResult<bool>> ExecuteAsync(Guid invoiceId)
     {
-        var invoice = await invoiceRepository.GetByIdAsync(invoiceId)
-            ?? throw new Exception("Invoice not found");
+        var invoice = await invoiceRepository.GetByIdAsync(invoiceId);
+        if (invoice is null)
+        {
+            return OperationResult<bool>.Fail("Invoice not found.", 404);
+        }
 
-        var customer = await customerRepository.GetByIdAsync(invoice.CustomerId)
-            ?? throw new Exception("Customer not found");
-
+        var customer = await customerRepository.GetByIdAsync(invoice.CustomerId);
+        if (customer is null)
+        {
+            return OperationResult<bool>.Fail("Customer not found.", 404);
+        }
 
         var pdfModel = new InvoicePdfModel
         {
@@ -46,5 +52,7 @@ public class SendInvoiceEmailUseCase(
             pdfBytes,
             $"Invoice-{invoice.InvoiceNumber}.pdf"
         );
+
+        return OperationResult<bool>.Succces(true, "Invoice email sent successfully.");
     }
 }

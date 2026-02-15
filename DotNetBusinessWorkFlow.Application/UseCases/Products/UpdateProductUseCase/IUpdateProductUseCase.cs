@@ -1,8 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Products;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Products;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
 
 public interface IUpdateProductUseCase
 {
-    Task ExecuteAsync(ProductRequestUpdateDto request);
+    Task<OperationResult<bool>> ExecuteAsync(ProductRequestUpdateDto request);
 }

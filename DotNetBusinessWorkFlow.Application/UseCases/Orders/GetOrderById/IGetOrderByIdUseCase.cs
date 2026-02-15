@@ -1,8 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Orders;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
 
 public interface IGetOrderByIdUseCase
 {
-    Task<OrderResponseDto?> ExecuteAsync(Guid orderId);
+    Task<OperationResult<OrderResponseDto>> ExecuteAsync(Guid orderId);
 }

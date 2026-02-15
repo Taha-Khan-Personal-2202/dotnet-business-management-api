@@ -1,4 +1,5 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.CreateCustomerUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByIdUseCase;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotNetBusinessWorkFlow.API.Controllers;
 
 [ApiController]
-[Route("api/customers")]
+[Route("api/[controller]")]
 [Authorize]
 public class CustomersController : ControllerBase
 {
@@ -30,7 +31,6 @@ public class CustomersController : ControllerBase
         _getAll = getAll;
     }
 
-    // CREATE CUSTOMER
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromBody] CustomerRequestDto dto)
@@ -39,39 +39,35 @@ public class CustomersController : ControllerBase
         return StatusCode(result.StatusCode, result);
     }
 
-    // UPDATE CUSTOMER
     [HttpPut("{customerId}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(Guid customerId, [FromBody] CustomerRequestUpdateDto dto)
     {
-        await _updateCustomer.ExecuteAsync(customerId, dto);
-        return Ok();
+        var result = await _updateCustomer.ExecuteAsync(customerId, dto);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // DEACTIVATE CUSTOMER
     [HttpPatch("{customerId}/deactivate")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Deactivate(Guid customerId)
+    public IActionResult Deactivate(Guid customerId)
     {
-        //await _deactivateCustomer.ExecuteAsync(customerId);
-        return NoContent();
+        var result = OperationResult<bool>.Fail("Deactivate customer endpoint is not implemented yet.", 501);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // GET BY ID
     [HttpGet("{customerId}")]
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> GetById(Guid customerId)
     {
         var result = await _getById.ExecuteAsync(customerId);
-        return result == null ? NotFound() : Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // GET ALL
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAll.ExecuteAsync();
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 }

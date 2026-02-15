@@ -1,8 +1,9 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
+using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.CreateInvoice;
 
 public interface ICreateInvoiceUseCase
 {
-    Task<InvoiceResponseDto> ExecuteAsync(Guid orderId);
+    Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid orderId);
 }

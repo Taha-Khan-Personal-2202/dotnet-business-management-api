@@ -1,4 +1,5 @@
-﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.DTOs.Common;
 using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
 using DotNetBusinessWorkFlow.Application.Mappings;
 using DotNetBusinessWorkFlow.Domain.Entities;
@@ -15,34 +16,36 @@ public class CreateInvoiceUseCase(
     IUnitOfWork unitOfWork
 ) : ICreateInvoiceUseCase
 {
-    public async Task<InvoiceResponseDto> ExecuteAsync(Guid orderId)
+    public async Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid orderId)
     {
-        var order = await orderRepository.GetByIdAsync(orderId)
-            ?? throw new Exception("Order not found");
+        var order = await orderRepository.GetByIdAsync(orderId);
+        if (order is null)
+        {
+            return OperationResult<InvoiceResponseDto>.Fail("Order not found.", 404);
+        }
 
         if (order.Status != OrderStatus.Paid)
-            throw new InvalidOperationException("Invoice can be created only for paid orders.");
+        {
+            return OperationResult<InvoiceResponseDto>.Fail("Invoice can be created only for paid orders.", 400);
+        }
 
         var existingInvoice = await invoiceRepository.GetByOrderIdAsync(orderId);
         if (existingInvoice != null)
-            throw new InvalidOperationException("Invoice already exists for this order.");
+        {
+            return OperationResult<InvoiceResponseDto>.Fail("Invoice already exists for this order.", 409);
+        }
 
-        var invoice = new Invoice(
-            order.Id,
-            order.CustomerId
-        );
+        var invoice = new Invoice(order.Id, order.CustomerId);
 
         foreach (var item in order.Items)
         {
             var product = await productRepository.GetByIdAsync(item.ProductId);
-            invoice.AddItem(product?.Name ?? string.Empty,
-                item.Quantity,
-                item.UnitPrice);
+            invoice.AddItem(product?.Name ?? string.Empty, item.Quantity, item.UnitPrice);
         }
 
         await invoiceRepository.AddAsync(invoice);
         await unitOfWork.SaveChangesAsync();
 
-        return EntityToDtoMapping.MapInvoice(invoice);
+        return OperationResult<InvoiceResponseDto>.Succces(EntityToDtoMapping.MapInvoice(invoice), "Invoice created successfully.", 201);
     }
 }
