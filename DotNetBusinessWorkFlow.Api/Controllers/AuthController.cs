@@ -2,19 +2,23 @@
 using DotNetBusinessWorkFlow.Application.DTOs.Auth;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetBusinessWorkFlow.Api.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController(ILoginService login) : ControllerBase
-    {
-        public readonly ILoginService _login = login;
+namespace DotNetBusinessWorkFlow.Api.Controllers;
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginRequestDto dto)
-        {
-            var result = await _login.ExecuteAsync(dto);
-            return StatusCode(result.StatusCode, result);
-        }
+[Route("api/auth")]
+[ApiController]
+public class AuthController : ControllerBase
+{
+    private readonly ILoginUseCase _loginUseCase;
+
+    public AuthController(ILoginUseCase loginUseCase)
+    {
+        _loginUseCase = loginUseCase;
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+    {
+        var result = await _loginUseCase.ExecuteAsync(request);
+        return StatusCode(result.StatusCode, result);
     }
 }

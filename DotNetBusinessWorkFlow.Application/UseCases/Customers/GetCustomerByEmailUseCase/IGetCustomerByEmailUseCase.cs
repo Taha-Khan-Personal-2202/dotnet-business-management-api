@@ -5,5 +5,7 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByEma
 
 public interface IGetCustomerByEmailUseCase
 {
-    Task<CustomerResponseDto?> ExecuteAsync(string email);
+    Task<OperationResult<CustomerResponseDto>?> ExecuteAsync(string email);
 }
+
+

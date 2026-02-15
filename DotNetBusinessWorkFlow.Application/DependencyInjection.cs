@@ -1,6 +1,7 @@
 ﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.UseCases.Auth;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.CreateCustomerUseCase;
+using DotNetBusinessWorkFlow.Application.UseCases.Customers.DeactivateCustomerUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByEmailUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByIdUseCase;
@@ -35,7 +36,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<ILoginService, LoginUseCase>();
+        services.AddScoped<ILoginUseCase, LoginUseCase>();
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
@@ -52,6 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IGetCustomerByEmailUseCase, GetCustomerByEmailUseCase>();
         services.AddScoped<IGetAllCustomersUseCase, GetAllCustomersUseCase>();
         services.AddScoped<IUpdateCustomerUseCase, UpdateCustomerUseCase>();
+        services.AddScoped<IDeactivateCustomerUseCase, DeactivateCustomerUseCase>();
 
         // Order Use Cases
         services.AddScoped<ICreateOrderUseCase, CreateOrderUseCase>();

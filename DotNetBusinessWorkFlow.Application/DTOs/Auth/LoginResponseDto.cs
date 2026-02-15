@@ -1,7 +1,7 @@
 ﻿namespace DotNetBusinessWorkFlow.Application.DTOs.Auth;
 
-public class LoginResponseDto
+public sealed record LoginResponseDto
 {
-    public string Token { get; set; } = null!;
-    public string Role { get; set; } = null!;
+    public string Token { get; init; } = string.Empty;
+    public string Role { get; init; } = string.Empty;
 }

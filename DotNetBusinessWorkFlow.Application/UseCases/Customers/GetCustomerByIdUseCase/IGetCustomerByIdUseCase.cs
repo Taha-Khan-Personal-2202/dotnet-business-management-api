@@ -1,9 +1,8 @@
-﻿using DotNetBusinessWorkFlow.Domain.Entities;
-using DotNetBusinessWorkFlow.Application.DTOs.Customers;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByIdUseCase;
 
 public interface IGetCustomerByIdUseCase
 {
-    Task<CustomerResponseDto?> ExecuteAsync(Guid id);
+    Task<OperationResult<CustomerResponseDto?>> ExecuteAsync(Guid id);
 }

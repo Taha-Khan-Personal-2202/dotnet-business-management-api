@@ -4,19 +4,23 @@ using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCase;
 
-public class GetAllCustomersUseCase(
-    ICustomerRepository customerRepository
-) : IGetAllCustomersUseCase
+public sealed class GetAllCustomersUseCase : IGetAllCustomersUseCase
 {
-    private readonly ICustomerRepository _customerRepository = customerRepository;
+    private readonly ICustomerRepository _customerRepository;
 
-    public async Task<IEnumerable<CustomerResponseDto>> ExecuteAsync()
+    public GetAllCustomersUseCase(ICustomerRepository customerRepository)
+    {
+        _customerRepository = customerRepository;
+    }
+
+    public async Task<OperationResult<IEnumerable<CustomerResponseDto>>> ExecuteAsync()
     {
         var customers = await _customerRepository.GetAllAsync();
 
-        return customers
+        var dtos = customers
             .Select(EntityToDtoMapping.MapCustomer)
             .ToList();
-    }
 
+        return OperationResult<IEnumerable<CustomerResponseDto>>.Ok(dtos);
+    }
 }

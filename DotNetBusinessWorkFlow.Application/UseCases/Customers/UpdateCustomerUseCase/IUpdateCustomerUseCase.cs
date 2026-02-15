@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.UpdateCustomerUs
 
 public interface IUpdateCustomerUseCase
 {
-    Task ExecuteAsync(Guid customerId, CustomerRequestUpdateDto request);
+    Task<OperationResult<CustomerResponseDto>> ExecuteAsync(Guid customerId, CustomerRequestUpdateDto dto);
 }

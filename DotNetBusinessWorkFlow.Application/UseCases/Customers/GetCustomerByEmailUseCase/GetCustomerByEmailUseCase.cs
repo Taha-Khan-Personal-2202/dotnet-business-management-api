@@ -10,8 +10,15 @@ public class GetCustomerByEmailUseCase(
 {
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
-    public async Task<CustomerResponseDto?> ExecuteAsync(string email)
+    public async Task<OperationResult<CustomerResponseDto?>> ExecuteAsync(string email)
     {
-        return EntityToDtoMapping.MapCustomer(await _customerRepository.GetByEmailAsync(email));
+        var customer = await _customerRepository.GetByEmailAsync(email);
+        if (customer == null)
+        {
+            return OperationResult<CustomerResponseDto?>.Error("Customer not found.", 404, null);
+        }
+
+        var dto = EntityToDtoMapping.MapCustomer(customer);
+        return OperationResult<CustomerResponseDto?>.Ok(dto);
     }
 }

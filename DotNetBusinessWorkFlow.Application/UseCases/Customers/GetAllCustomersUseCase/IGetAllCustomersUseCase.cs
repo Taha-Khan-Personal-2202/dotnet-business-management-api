@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersU
 
 public interface IGetAllCustomersUseCase
 {
-    Task<IEnumerable<CustomerResponseDto>> ExecuteAsync();
+    Task<OperationResult<IEnumerable<CustomerResponseDto>>> ExecuteAsync();
 }
