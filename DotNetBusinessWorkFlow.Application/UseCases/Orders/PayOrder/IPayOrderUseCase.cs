@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
 
 public interface IPayOrderUseCase
 {
-    Task<OrderResponseDto> ExecuteAsync(Guid orderId);
+    Task<OperationResult<OrderResponseDto>> ExecuteAsync(Guid orderId);
 }

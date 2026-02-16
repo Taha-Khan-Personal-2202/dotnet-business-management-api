@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
 
 public interface IGetOrderByIdUseCase
 {
-    Task<OrderResponseDto?> ExecuteAsync(Guid orderId);
+    Task<OperationResult<OrderResponseDto?>> ExecuteAsync(Guid orderId);
 }

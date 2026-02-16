@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Products.GetAllProductsUse
 
 public interface IGetAllProductsUseCase
 {
-    Task<IReadOnlyList<ProductResponseDto>> ExecuteAsync();
+    Task<OperationResult<IEnumerable<ProductResponseDto>>> ExecuteAsync();
 }

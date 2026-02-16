@@ -4,13 +4,24 @@ using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
 
-public class GetOrderByIdUseCase(
-    IOrderRepository orderRepository
-) : IGetOrderByIdUseCase
+public sealed class GetOrderByIdUseCase : IGetOrderByIdUseCase
 {
-    public async Task<OrderResponseDto?> ExecuteAsync(Guid orderId)
+    private readonly IOrderRepository _orderRepository;
+
+    public GetOrderByIdUseCase(IOrderRepository orderRepository)
     {
-        var order = await orderRepository.GetByIdAsync(orderId);
-        return EntityToDtoMapping.MapOrder(order);
+        _orderRepository = orderRepository;
+    }
+
+    public async Task<OperationResult<OrderResponseDto?>> ExecuteAsync(Guid orderId)
+    {
+        var order = await _orderRepository.GetByIdAsync(orderId);
+        if (order is null)
+        {
+            return OperationResult<OrderResponseDto?>.Error("Order not found.", 404, null);
+        }
+
+        var response = EntityToDtoMapping.MapOrder(order);
+        return OperationResult<OrderResponseDto?>.Ok(response, "Order retrieved successfully.");
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseCase;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Products;
+
+namespace DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseCase;
 
 public interface IDeactivateProductUseCase
 {
-    Task ExecuteAsync(Guid productId);
+    Task<OperationResult<ProductResponseDto>> ExecuteAsync(Guid productId);
 }

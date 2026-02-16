@@ -5,20 +5,36 @@ using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.CancelOrder;
 
-public class CancelOrderUseCase(
-    IOrderRepository orderRepository,
-    IUnitOfWork unitOfWork
-) : ICancelOrderUseCase
+public sealed class CancelOrderUseCase : ICancelOrderUseCase
 {
-    public async Task<OrderResponseDto> ExecuteAsync(Guid orderId)
+    private readonly IOrderRepository _orderRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CancelOrderUseCase(
+        IOrderRepository orderRepository,
+        IUnitOfWork unitOfWork)
     {
-        var order = await orderRepository.GetByIdAsync(orderId)
-            ?? throw new Exception("Order not found");
+        _orderRepository = orderRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<OperationResult<OrderResponseDto>> ExecuteAsync(Guid orderId)
+    {
+        var order = await _orderRepository.GetByIdAsync(orderId);
+        if (order is null)
+        {
+            return OperationResult<OrderResponseDto>.Error("Order not found.", 404);
+        }
+
+        if (!order.CanBeCancelled(out var reason))
+        {
+            return OperationResult<OrderResponseDto>.Error(reason ?? "Cannot cancel this order.", 400);
+        }
 
         order.Cancel();
+        await _unitOfWork.SaveChangesAsync();
 
-        await unitOfWork.SaveChangesAsync();
-
-        return EntityToDtoMapping.MapOrder(order);
+        var response = EntityToDtoMapping.MapOrder(order);
+        return OperationResult<OrderResponseDto>.Ok(response, "Order cancelled successfully.");
     }
 }

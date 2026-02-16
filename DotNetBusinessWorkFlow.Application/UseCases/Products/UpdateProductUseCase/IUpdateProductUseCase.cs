@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseC
 
 public interface IUpdateProductUseCase
 {
-    Task ExecuteAsync(ProductRequestUpdateDto request);
+    Task<OperationResult<ProductResponseDto>> ExecuteAsync(ProductRequestUpdateDto dto);
 }

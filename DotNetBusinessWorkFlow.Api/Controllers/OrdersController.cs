@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using DotNetBusinessWorkFlow.Application.DTOs.Orders;
-using DotNetBusinessWorkFlow.Application.UseCases.Orders.CreateOrder;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.AddOrderItem;
-using DotNetBusinessWorkFlow.Application.UseCases.Orders.ConfirmOrder;
-using DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
-using DotNetBusinessWorkFlow.Application.UseCases.Orders.CompleteOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.CancelOrder;
-using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.CompleteOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.ConfirmOrder;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.CreateOrder;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetAllOrders;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrdersByCustomer;
+using DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetBusinessWorkFlow.API.Controllers;
 
 [ApiController]
 [Route("api/orders")]
-[Authorize] // Base: user must be authenticated
+[Authorize]
 public class OrdersController : ControllerBase
 {
     private readonly ICreateOrderUseCase _createOrder;
@@ -54,17 +54,14 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> Create([FromBody] OrderRequestDto dto)
     {
         var result = await _createOrder.ExecuteAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { orderId = result.Id }, result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpPost("{orderId}/items")]
-    public async Task<IActionResult> AddItem(
-        Guid orderId,
-        [FromQuery] Guid productId,
-        [FromQuery] int quantity)
+    public async Task<IActionResult> AddItem(Guid orderId, [FromQuery] Guid productId, [FromQuery] int quantity)
     {
         var result = await _addOrderItem.ExecuteAsync(orderId, productId, quantity);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpPost("{orderId}/confirm")]
@@ -72,14 +69,14 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> Confirm(Guid orderId)
     {
         var result = await _confirmOrder.ExecuteAsync(orderId);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpPost("{orderId}/pay")]
     public async Task<IActionResult> Pay(Guid orderId)
     {
         var result = await _payOrder.ExecuteAsync(orderId);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpPost("{orderId}/complete")]
@@ -87,21 +84,21 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> Complete(Guid orderId)
     {
         var result = await _completeOrder.ExecuteAsync(orderId);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpPost("{orderId}/cancel")]
     public async Task<IActionResult> Cancel(Guid orderId)
     {
         var result = await _cancelOrder.ExecuteAsync(orderId);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpGet("{orderId}")]
     public async Task<IActionResult> GetById(Guid orderId)
     {
         var result = await _getOrderById.ExecuteAsync(orderId);
-        return result == null ? NotFound() : Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpGet]
@@ -109,13 +106,13 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAllOrders.ExecuteAsync();
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpGet("customer/{customerId}")]
     public async Task<IActionResult> GetByCustomer(Guid customerId)
     {
         var result = await _getOrdersByCustomer.ExecuteAsync(customerId);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 }

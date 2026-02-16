@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Products.GetProductByIdUse
 
 public interface IGetProductByIdUseCase
 {
-    Task<ProductResponseDto?> ExecuteAsync(Guid productId);
+    Task<OperationResult<ProductResponseDto?>> ExecuteAsync(Guid productId);
 }

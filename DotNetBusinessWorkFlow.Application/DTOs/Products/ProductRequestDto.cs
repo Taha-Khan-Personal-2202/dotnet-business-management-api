@@ -2,8 +2,8 @@
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Products;
 
-public class ProductRequestDto
+public sealed record ProductRequestDto
 {
-    public string Name { get; set; } = default!;
-    public Money Price { get; set; } = default!;
+    public string Name { get; init; } = string.Empty;
+    public Money Price { get; init; } = Money.Zero("INR");
 }

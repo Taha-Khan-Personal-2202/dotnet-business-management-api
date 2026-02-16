@@ -4,13 +4,21 @@ using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrdersByCustomer;
 
-public class GetOrdersByCustomerUseCase(
-    IOrderRepository orderRepository
-) : IGetOrdersByCustomerUseCase
+public sealed class GetOrdersByCustomerUseCase : IGetOrdersByCustomerUseCase
 {
-    public async Task<IEnumerable<OrderResponseDto>> ExecuteAsync(Guid customerId)
+    private readonly IOrderRepository _orderRepository;
+
+    public GetOrdersByCustomerUseCase(IOrderRepository orderRepository)
     {
-        var orders = await orderRepository.GetByCustomerIdAsync(customerId);
-        return orders.Select(EntityToDtoMapping.MapOrder);
+        _orderRepository = orderRepository;
+    }
+
+    public async Task<OperationResult<IEnumerable<OrderResponseDto>>> ExecuteAsync(Guid customerId)
+    {
+        var orders = await _orderRepository.GetByCustomerIdAsync(customerId);
+
+        var dtos = orders.Select(EntityToDtoMapping.MapOrder).ToList();
+
+        return OperationResult<IEnumerable<OrderResponseDto>>.Ok(dtos, $"Retrieved {dtos.Count} orders for customer.");
     }
 }

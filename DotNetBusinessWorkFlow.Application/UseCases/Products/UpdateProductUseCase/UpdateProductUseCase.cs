@@ -1,24 +1,48 @@
-﻿using DotNetBusinessWorkFlow.Domain.Repositories;
-using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
-using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
+using DotNetBusinessWorkFlow.Application.Mappings;
+using DotNetBusinessWorkFlow.Domain.Repositories;
+using FluentValidation;
 
-public sealed class UpdateProductUseCase(
-    IProductRepository productRepository,
-    IUnitOfWork unitOfWork) : IUpdateProductUseCase
+namespace DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
+
+public sealed class UpdateProductUseCase : IUpdateProductUseCase
 {
-    private readonly IProductRepository _productRepository = productRepository;
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IProductRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<ProductRequestUpdateDto> _validator;
 
-    public async Task ExecuteAsync(ProductRequestUpdateDto request)
+    public UpdateProductUseCase(
+        IProductRepository repository,
+        IUnitOfWork unitOfWork,
+        IValidator<ProductRequestUpdateDto> validator)
     {
-        var product = await _productRepository.GetByIdAsync(request.Id)
-            ?? throw new InvalidOperationException("Product not found.");
+        _repository = repository;
+        _unitOfWork = unitOfWork;
+        _validator = validator;
+    }
 
-        product.Update(request.Name, request.Price);
+    public async Task<OperationResult<ProductResponseDto>> ExecuteAsync(ProductRequestUpdateDto dto)
+    {
+        var validationResult = await _validator.ValidateAsync(dto);
+        if (!validationResult.IsValid)
+        {
+            var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+            return OperationResult<ProductResponseDto>.Error($"Validation failed: {errors}", 400);
+        }
 
-        await _productRepository.UpdateAsync(product);
+        var product = await _repository.GetByIdAsync(dto.Id);
+        if (product is null)
+        {
+            return OperationResult<ProductResponseDto>.Error("Product not found.", 404);
+        }
+
+        product.Update(dto.Name, dto.Price);
+
+        await _repository.UpdateAsync(product);
         await _unitOfWork.SaveChangesAsync();
+
+        var responseDto = EntityToDtoMapping.MapProduct(product);
+        return OperationResult<ProductResponseDto>.Ok(responseDto, "Product updated successfully.");
     }
 }
-

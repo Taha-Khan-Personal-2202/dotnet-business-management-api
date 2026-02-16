@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.CompleteOrder;
 
 public interface ICompleteOrderUseCase
 {
-    Task<OrderResponseDto> ExecuteAsync(Guid orderId);
+    Task<OperationResult<OrderResponseDto>> ExecuteAsync(Guid orderId);
 }

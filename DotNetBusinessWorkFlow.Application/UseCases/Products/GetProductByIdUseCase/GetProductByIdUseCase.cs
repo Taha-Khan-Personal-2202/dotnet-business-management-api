@@ -1,16 +1,27 @@
-﻿using DotNetBusinessWorkFlow.Domain.Repositories;
-using DotNetBusinessWorkFlow.Application.DTOs.Products;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Products;
 using DotNetBusinessWorkFlow.Application.Mappings;
+using DotNetBusinessWorkFlow.Domain.Repositories;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Products.GetProductByIdUseCase;
 
-public class GetProductByIdUseCase(IProductRepository repository) : IGetProductByIdUseCase
+public sealed class GetProductByIdUseCase : IGetProductByIdUseCase
 {
-    private IProductRepository _repository { get; } = repository;
+    private readonly IProductRepository _repository;
 
-    public async Task<ProductResponseDto?> ExecuteAsync(Guid productId)
+    public GetProductByIdUseCase(IProductRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public async Task<OperationResult<ProductResponseDto?>> ExecuteAsync(Guid productId)
     {
         var product = await _repository.GetByIdAsync(productId);
-        return EntityToDtoMapping.MapProduct(product);
+        if (product is null)
+        {
+            return OperationResult<ProductResponseDto?>.Error("Product not found.", 404, null);
+        }
+
+        var dto = EntityToDtoMapping.MapProduct(product);
+        return OperationResult<ProductResponseDto?>.Ok(dto);
     }
 }

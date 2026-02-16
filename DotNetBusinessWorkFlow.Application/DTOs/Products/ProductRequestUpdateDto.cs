@@ -1,10 +1,10 @@
-﻿using DotNetBusinessWorkFlow.Application.DTOs.Common;
-using DotNetBusinessWorkFlow.Domain.ValueObjects;
+﻿using DotNetBusinessWorkFlow.Domain.ValueObjects;
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Products;
 
-public class ProductRequestUpdateDto : BaseEntityDto
+public sealed record ProductRequestUpdateDto
 {
-    public string Name { get; set; } = default!;
-    public Money Price { get; set; } = default!;
+    public Guid Id { get; set; }
+    public string Name { get; init; } = string.Empty;
+    public Money Price { get; init; } = Money.Zero("INR");
 }

@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrdersByCustomer
 
 public interface IGetOrdersByCustomerUseCase
 {
-    Task<IEnumerable<OrderResponseDto>> ExecuteAsync(Guid customerId);
+    Task<OperationResult<IEnumerable<OrderResponseDto>>> ExecuteAsync(Guid customerId);
 }

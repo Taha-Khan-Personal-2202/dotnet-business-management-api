@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.GetAllOrders;
 
 public interface IGetAllOrdersUseCase
 {
-    Task<IEnumerable<OrderResponseDto>> ExecuteAsync();
+    Task<OperationResult<IEnumerable<OrderResponseDto>>> ExecuteAsync();
 }

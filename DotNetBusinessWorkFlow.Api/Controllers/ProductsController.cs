@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using DotNetBusinessWorkFlow.Application.DTOs.Products;
+﻿using DotNetBusinessWorkFlow.Application.DTOs.Products;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.CreateProductUseCase;
-using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.DeactivateProductUseCase;
-using DotNetBusinessWorkFlow.Application.UseCases.Products.GetProductByIdUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Products.GetAllProductsUseCase;
+using DotNetBusinessWorkFlow.Application.UseCases.Products.GetProductByIdUseCase;
+using DotNetBusinessWorkFlow.Application.UseCases.Products.UpdateProductUseCase;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetBusinessWorkFlow.API.Controllers;
 
 [ApiController]
 [Route("api/products")]
-[Authorize] // Base authorization
+[Authorize]
 public class ProductsController : ControllerBase
 {
     private readonly ICreateProductUseCase _createProduct;
@@ -34,50 +34,44 @@ public class ProductsController : ControllerBase
         _getAll = getAll;
     }
 
-    // CREATE PRODUCT
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromBody] ProductRequestDto dto)
     {
         var result = await _createProduct.ExecuteAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { productId = result }, result);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // UPDATE PRODUCT
     [HttpPut("{productId}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(Guid productId, [FromBody] ProductRequestUpdateDto dto)
     {
         dto.Id = productId;
-        await _updateProduct.ExecuteAsync(dto);
-        return Ok();
+        var result = await _updateProduct.ExecuteAsync(dto);
+        return StatusCode(result.StatusCode, result);
     }
 
-
-    // DEACTIVATE PRODUCT
     [HttpPatch("{productId}/deactivate")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Deactivate(Guid productId)
     {
-        await _deactivateProduct.ExecuteAsync(productId);
-        return NoContent();
+        var result = await _deactivateProduct.ExecuteAsync(productId);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // GET BY ID
     [HttpGet("{productId}")]
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> GetById(Guid productId)
     {
         var result = await _getById.ExecuteAsync(productId);
-        return result == null ? NotFound() : Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
-    // GET ALL
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAll.ExecuteAsync();
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 }

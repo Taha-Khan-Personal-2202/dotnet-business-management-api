@@ -5,20 +5,36 @@ using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
 
-public class PayOrderUseCase(
-    IOrderRepository orderRepository,
-    IUnitOfWork unitOfWork
-) : IPayOrderUseCase
+public sealed class PayOrderUseCase : IPayOrderUseCase
 {
-    public async Task<OrderResponseDto> ExecuteAsync(Guid orderId)
+    private readonly IOrderRepository _orderRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public PayOrderUseCase(
+        IOrderRepository orderRepository,
+        IUnitOfWork unitOfWork)
     {
-        var order = await orderRepository.GetByIdAsync(orderId)
-            ?? throw new Exception("Order not found");
+        _orderRepository = orderRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<OperationResult<OrderResponseDto>> ExecuteAsync(Guid orderId)
+    {
+        var order = await _orderRepository.GetByIdAsync(orderId);
+        if (order is null)
+        {
+            return OperationResult<OrderResponseDto>.Error("Order not found.", 404);
+        }
+
+        if (!order.CanBePaid(out var reason))
+        {
+            return OperationResult<OrderResponseDto>.Error(reason ?? "Cannot pay this order.", 400);
+        }
 
         order.MarkAsPaid();
+        await _unitOfWork.SaveChangesAsync();
 
-        await unitOfWork.SaveChangesAsync();
-
-        return EntityToDtoMapping.MapOrder(order);
+        var response = EntityToDtoMapping.MapOrder(order);
+        return OperationResult<OrderResponseDto>.Ok(response, "Order marked as paid successfully.");
     }
 }
