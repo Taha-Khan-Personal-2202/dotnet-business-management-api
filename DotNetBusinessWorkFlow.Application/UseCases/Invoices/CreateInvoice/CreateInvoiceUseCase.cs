@@ -15,17 +15,22 @@ public class CreateInvoiceUseCase(
     IUnitOfWork unitOfWork
 ) : ICreateInvoiceUseCase
 {
-    public async Task<InvoiceResponseDto> ExecuteAsync(Guid orderId)
+    public async Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid orderId)
     {
-        var order = await orderRepository.GetByIdAsync(orderId)
-            ?? throw new Exception("Order not found");
+        // getting order
+        var order = await orderRepository.GetByIdAsync(orderId);
 
-        if (order.Status != OrderStatus.Paid)
-            throw new InvalidOperationException("Invoice can be created only for paid orders.");
+        if (order == null)
+            return OperationResult<InvoiceResponseDto>.Error("Order not found.");
 
+        // checking status
+        if (order.Status == OrderStatus.Created || order.Status == OrderStatus.Confirmed)
+            return OperationResult<InvoiceResponseDto>.Error("Invoice can be created only for paid orders.");
+
+        // getting inovice
         var existingInvoice = await invoiceRepository.GetByOrderIdAsync(orderId);
         if (existingInvoice != null)
-            throw new InvalidOperationException("Invoice already exists for this order.");
+            return OperationResult<InvoiceResponseDto>.Error("Invoice already exists for this order.");
 
         var invoice = new Invoice(
             order.Id,
@@ -43,6 +48,6 @@ public class CreateInvoiceUseCase(
         await invoiceRepository.AddAsync(invoice);
         await unitOfWork.SaveChangesAsync();
 
-        return EntityToDtoMapping.MapInvoice(invoice);
+        return OperationResult<InvoiceResponseDto>.Ok(EntityToDtoMapping.MapInvoice(invoice));
     }
 }

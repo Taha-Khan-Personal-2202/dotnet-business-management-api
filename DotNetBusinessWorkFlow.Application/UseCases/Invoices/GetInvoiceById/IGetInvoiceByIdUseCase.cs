@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetInvoiceById;
 
 public interface IGetInvoiceByIdUseCase
 {
-    Task<InvoiceResponseDto?> ExecuteAsync(Guid invoiceId);
+    Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid invoiceId);
 }

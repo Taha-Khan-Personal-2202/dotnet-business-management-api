@@ -13,14 +13,15 @@ public class SendInvoiceEmailUseCase(
     IEmailSender emailSender
 ) : ISendInvoiceEmailUseCase
 {
-    public async Task ExecuteAsync(Guid invoiceId)
+    public async Task<OperationResult<string>> ExecuteAsync(Guid invoiceId)
     {
-        var invoice = await invoiceRepository.GetByIdAsync(invoiceId)
-            ?? throw new Exception("Invoice not found");
+        var invoice = await invoiceRepository.GetByIdAsync(invoiceId);
+        if (invoice == null)
+            return OperationResult<string>.Error("Invoice not found.");
 
-        var customer = await customerRepository.GetByIdAsync(invoice.CustomerId)
-            ?? throw new Exception("Customer not found");
-
+        var customer = await customerRepository.GetByIdAsync(invoice.CustomerId);
+        if (customer == null)
+            return OperationResult<string>.Error("Customer not found.");
 
         var pdfModel = new InvoicePdfModel
         {
@@ -39,12 +40,21 @@ public class SendInvoiceEmailUseCase(
 
         var pdfBytes = pdfGenerator.Generate(pdfModel);
 
-        await emailSender.SendAsync(
-            customer.Email,
-            $"Invoice {invoice.InvoiceNumber}",
-            "Please find your invoice attached.",
-            pdfBytes,
-            $"Invoice-{invoice.InvoiceNumber}.pdf"
-        );
+        try
+        {
+            await emailSender.SendAsync(
+                customer.Email,
+                $"Invoice {invoice.InvoiceNumber}",
+                "Please find your invoice attached.",
+                pdfBytes,
+                $"Invoice-{invoice.InvoiceNumber}.pdf"
+            );
+        }
+        catch (Exception e)
+        {
+            return OperationResult<string>.Error(e.Message);
+        }
+
+        return OperationResult<string>.Ok("Invoice email sent successfully.");
     }
 }

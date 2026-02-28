@@ -8,9 +8,11 @@ public class GetInvoiceByIdUseCase(
     IInvoiceRepository invoiceRepository
 ) : IGetInvoiceByIdUseCase
 {
-    public async Task<InvoiceResponseDto?> ExecuteAsync(Guid invoiceId)
+    public async Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid invoiceId)
     {
         var invoice = await invoiceRepository.GetByIdAsync(invoiceId);
-        return invoice == null ? null : EntityToDtoMapping.MapInvoice(invoice);
+        if (invoice == null) return OperationResult<InvoiceResponseDto>.Error("Invoice not found.");
+
+        return OperationResult<InvoiceResponseDto>.Ok(EntityToDtoMapping.MapInvoice(invoice));
     }
 }

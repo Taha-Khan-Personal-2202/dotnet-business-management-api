@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Payments.CreatePayment;
 
 public interface ICreatePaymentUseCase
 {
-    Task<PaymentResponseDto> ExecuteAsync(PaymentRequestDto dto);
+    Task<OperationResult<PaymentResponseDto>> ExecuteAsync(PaymentRequestDto dto);
 }

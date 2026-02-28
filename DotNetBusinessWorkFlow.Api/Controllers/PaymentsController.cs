@@ -28,7 +28,7 @@ public class PaymentsController : ControllerBase
     public async Task<IActionResult> Pay([FromBody] PaymentRequestDto dto)
     {
         var result = await _createPayment.ExecuteAsync(dto);
-        return Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 
     // GET PAYMENT BY ORDER
@@ -37,6 +37,6 @@ public class PaymentsController : ControllerBase
     public async Task<IActionResult> GetByOrder(Guid orderId)
     {
         var result = await _getByOrder.ExecuteAsync(orderId);
-        return result == null ? NotFound() : Ok(result);
+        return StatusCode(result.StatusCode, result);
     }
 }

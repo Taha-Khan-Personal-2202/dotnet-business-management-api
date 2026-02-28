@@ -7,12 +7,12 @@ public class GetPaymentUseCase(
     IPaymentRepository paymentRepository
 ) : IGetPaymentUseCase
 {
-    public async Task<PaymentResponseDto?> ExecuteAsync(Guid orderId)
+    public async Task<OperationResult<PaymentResponseDto>> ExecuteAsync(Guid orderId)
     {
         var payment = await paymentRepository.GetByOrderIdAsync(orderId);
-        if (payment == null) return null;
+        if (payment == null) return OperationResult<PaymentResponseDto>.Error("Order not found.");
 
-        return new PaymentResponseDto
+        var response = new PaymentResponseDto
         {
             Id = payment.Id,
             OrderId = payment.OrderId,
@@ -20,5 +20,7 @@ public class GetPaymentUseCase(
             Status = payment.Status,
             CreatedAt = payment.CreatedAt
         };
+
+        return OperationResult<PaymentResponseDto>.Ok(response);
     }
 }

@@ -2,5 +2,5 @@
 
 public interface ISendInvoiceEmailUseCase
 {
-    Task ExecuteAsync(Guid invoiceId);
+    Task<OperationResult<string>> ExecuteAsync(Guid invoiceId);
 }

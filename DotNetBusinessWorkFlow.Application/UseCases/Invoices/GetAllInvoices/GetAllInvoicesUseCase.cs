@@ -8,9 +8,9 @@ public class GetAllInvoicesUseCase(
     IInvoiceRepository invoiceRepository
 ) : IGetAllInvoicesUseCase
 {
-    public async Task<IEnumerable<InvoiceResponseDto>> ExecuteAsync()
+    public async Task<OperationResult<IEnumerable<InvoiceResponseDto>>> ExecuteAsync()
     {
         var invoices = await invoiceRepository.GetAllAsync();
-        return invoices.Select(EntityToDtoMapping.MapInvoice);
+        return OperationResult<IEnumerable<InvoiceResponseDto>>.Ok(invoices.Select(EntityToDtoMapping.MapInvoice));
     }
 }

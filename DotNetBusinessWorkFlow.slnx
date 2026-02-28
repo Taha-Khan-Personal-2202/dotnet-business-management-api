@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
     <File Path=".gitignore" />
   </Folder>
   <Project Path="DotNetBusinessWorkFlow.Api/DotNetBusinessWorkFlow.Api.csproj" Id="c4c837ac-5631-41e3-8bb1-bb3cd2a48bbd" />

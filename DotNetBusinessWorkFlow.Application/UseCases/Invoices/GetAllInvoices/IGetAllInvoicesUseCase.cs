@@ -4,5 +4,5 @@ namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetAllInvoices;
 
 public interface IGetAllInvoicesUseCase
 {
-    Task<IEnumerable<InvoiceResponseDto>> ExecuteAsync();
+    Task<OperationResult<IEnumerable<InvoiceResponseDto>>> ExecuteAsync();
 }

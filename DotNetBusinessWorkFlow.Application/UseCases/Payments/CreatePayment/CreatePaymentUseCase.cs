@@ -1,28 +1,48 @@
 ﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
+using DotNetBusinessWorkFlow.Application.DTOs.Auth;
 using DotNetBusinessWorkFlow.Application.DTOs.Payments;
+using DotNetBusinessWorkFlow.Application.Validators.Payments;
 using DotNetBusinessWorkFlow.Domain.Entities;
+using DotNetBusinessWorkFlow.Domain.Enums;
 using DotNetBusinessWorkFlow.Domain.Interfaces;
+using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Payments.CreatePayment;
 
 public class CreatePaymentUseCase(
     IPaymentRepository paymentRepository,
     IOrderRepository orderRepository,
-    IUnitOfWork unitOfWork
-) : ICreatePaymentUseCase
+    IUnitOfWork unitOfWork,
+    IValidator<PaymentRequestDto> validator) : ICreatePaymentUseCase
 {
-    public async Task<PaymentResponseDto> ExecuteAsync(PaymentRequestDto dto)
+    public IValidator<PaymentRequestDto> _validator { get; } = validator;
+
+    public async Task<OperationResult<PaymentResponseDto>> ExecuteAsync(PaymentRequestDto dto)
     {
-        var order = await orderRepository.GetByIdAsync(dto.OrderId)
-            ?? throw new Exception("Order not found.");
+        // validiton
+        var validationResult = await _validator.ValidateAsync(dto);
+        if (!validationResult.IsValid)
+        {
+            var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+            return OperationResult<PaymentResponseDto>.Error(errors, 400);
+        }
 
-        if (order.Status != Domain.Enums.OrderStatus.Confirmed)
-            throw new Exception("Only confirmed orders can be paid.");
+        // finding order
+        var order = await orderRepository.GetByIdAsync(dto.OrderId);
+        if (order == null)
+            return OperationResult<PaymentResponseDto>.Error("Order not found.");
 
+        // checking status
+        if (order.Status != OrderStatus.Confirmed)
+            return OperationResult<PaymentResponseDto>.Error("Only confirmed orders can be paid.");
+
+        // checking payment
         var existingPayment = await paymentRepository.GetByOrderIdAsync(dto.OrderId);
         if (existingPayment != null)
-            throw new Exception("Payment already exists.");
+            return OperationResult<PaymentResponseDto>.Error("Payment already exists.");
 
+        // adding payment and updating status
         var payment = new Payment(dto.OrderId, dto.Amount);
         payment.MarkAsPaid();
 
@@ -31,7 +51,7 @@ public class CreatePaymentUseCase(
 
         await unitOfWork.SaveChangesAsync();
 
-        return new PaymentResponseDto
+        var response = new PaymentResponseDto
         {
             Id = payment.Id,
             OrderId = payment.OrderId,
@@ -39,5 +59,7 @@ public class CreatePaymentUseCase(
             Status = payment.Status,
             CreatedAt = payment.CreatedAt
         };
+
+        return OperationResult<PaymentResponseDto>.Ok(response);
     }
 }
