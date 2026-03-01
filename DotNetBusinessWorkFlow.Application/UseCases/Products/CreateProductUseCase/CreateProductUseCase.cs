@@ -1,6 +1,5 @@
 ﻿using DotNetBusinessWorkFlow.Application.Common.Interfaces;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
-using DotNetBusinessWorkFlow.Application.Validators.Products;
 using DotNetBusinessWorkFlow.Domain.Entities;
 using DotNetBusinessWorkFlow.Domain.Repositories;
 using FluentValidation;
@@ -11,12 +10,12 @@ public sealed class CreateProductUseCase : ICreateProductUseCase
 {
     private readonly IProductRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ProductRequestDtoValidator _validator;
+    private readonly IValidator<ProductRequestDto> _validator;
 
     public CreateProductUseCase(
         IProductRepository repository,
         IUnitOfWork unitOfWork,
-        ProductRequestDtoValidator validator)
+        IValidator<ProductRequestDto> validator)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
@@ -29,7 +28,7 @@ public sealed class CreateProductUseCase : ICreateProductUseCase
         if (!validationResult.IsValid)
         {
             var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-            return OperationResult<Guid>.Error($"Validation failed: {errors}", 400);
+            return OperationResult<Guid>.Error(errors, 400);
         }
 
         var product = new Product(dto.Name, dto.Price);

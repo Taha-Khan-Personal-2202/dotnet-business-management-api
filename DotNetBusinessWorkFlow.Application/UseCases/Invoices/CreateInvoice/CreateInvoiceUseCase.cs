@@ -8,46 +8,54 @@ using DotNetBusinessWorkFlow.Domain.Repositories;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.CreateInvoice;
 
-public class CreateInvoiceUseCase(
-    IProductRepository productRepository,
-    IOrderRepository orderRepository,
-    IInvoiceRepository invoiceRepository,
-    IUnitOfWork unitOfWork
-) : ICreateInvoiceUseCase
+public sealed class CreateInvoiceUseCase : ICreateInvoiceUseCase
 {
+    private readonly IOrderRepository _orderRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly IInvoiceRepository _invoiceRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateInvoiceUseCase(
+        IOrderRepository orderRepository,
+        IProductRepository productRepository,
+        IInvoiceRepository invoiceRepository,
+        IUnitOfWork unitOfWork)
+    {
+        _orderRepository = orderRepository;
+        _productRepository = productRepository;
+        _invoiceRepository = invoiceRepository;
+        _unitOfWork = unitOfWork;
+    }
+
     public async Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid orderId)
     {
-        // getting order
-        var order = await orderRepository.GetByIdAsync(orderId);
+        var order = await _orderRepository.GetByIdAsync(orderId);
+        if (order is null)
+            return OperationResult<InvoiceResponseDto>.Error("Order not found.", 404);
 
-        if (order == null)
-            return OperationResult<InvoiceResponseDto>.Error("Order not found.");
+        if (order.Status != OrderStatus.Paid)
+            return OperationResult<InvoiceResponseDto>.Error("Invoice can only be created for paid orders.", 400);
 
-        // checking status
-        if (order.Status == OrderStatus.Created || order.Status == OrderStatus.Confirmed)
-            return OperationResult<InvoiceResponseDto>.Error("Invoice can be created only for paid orders.");
+        var existing = await _invoiceRepository.GetByOrderIdAsync(orderId);
+        if (existing is not null)
+            return OperationResult<InvoiceResponseDto>.Error("Invoice already exists for this order.", 409);
 
-        // getting inovice
-        var existingInvoice = await invoiceRepository.GetByOrderIdAsync(orderId);
-        if (existingInvoice != null)
-            return OperationResult<InvoiceResponseDto>.Error("Invoice already exists for this order.");
-
-        var invoice = new Invoice(
-            order.Id,
-            order.CustomerId
-        );
+        var invoice = new Invoice(order.Id, order.CustomerId);
 
         foreach (var item in order.Items)
         {
-            var product = await productRepository.GetByIdAsync(item.ProductId);
-            invoice.AddItem(product?.Name ?? string.Empty,
+            var product = await _productRepository.GetByIdAsync(item.ProductId);
+            invoice.AddItem(
+                product?.Name ?? "Unknown Product",
                 item.Quantity,
-                item.UnitPrice);
+                item.UnitPrice
+            );
         }
 
-        await invoiceRepository.AddAsync(invoice);
-        await unitOfWork.SaveChangesAsync();
+        await _invoiceRepository.AddAsync(invoice);
+        await _unitOfWork.SaveChangesAsync();
 
-        return OperationResult<InvoiceResponseDto>.Ok(EntityToDtoMapping.MapInvoice(invoice));
+        var dto = EntityToDtoMapping.MapInvoice(invoice);
+        return OperationResult<InvoiceResponseDto>.Ok(dto, "Invoice created successfully.", 201);
     }
 }

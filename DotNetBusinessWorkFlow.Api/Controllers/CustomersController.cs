@@ -5,6 +5,7 @@ using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetAllCustomersUseCa
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.GetCustomerByIdUseCase;
 using DotNetBusinessWorkFlow.Application.UseCases.Customers.UpdateCustomerUseCase;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetBusinessWorkFlow.API.Controllers;
@@ -36,6 +37,9 @@ public class CustomersController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(OperationResult<Guid>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(OperationResult<Guid>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<Guid>), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Create([FromBody] CustomerRequestDto dto)
     {
         var result = await _createCustomer.ExecuteAsync(dto);
@@ -44,6 +48,9 @@ public class CustomersController : ControllerBase
 
     [HttpPut("{customerId}")]
     [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(Guid customerId, [FromBody] CustomerRequestUpdateDto dto)
     {
         var result = await _updateCustomer.ExecuteAsync(customerId, dto);
@@ -52,6 +59,8 @@ public class CustomersController : ControllerBase
 
     [HttpPatch("{customerId}/deactivate")]
     [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Deactivate(Guid customerId)
     {
         var result = await _deactivateCustomer.ExecuteAsync(customerId);
@@ -60,6 +69,8 @@ public class CustomersController : ControllerBase
 
     [HttpGet("{customerId}")]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto?>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<CustomerResponseDto?>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid customerId)
     {
         var result = await _getById.ExecuteAsync(customerId);
@@ -68,6 +79,7 @@ public class CustomersController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<IEnumerable<CustomerResponseDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAll.ExecuteAsync();

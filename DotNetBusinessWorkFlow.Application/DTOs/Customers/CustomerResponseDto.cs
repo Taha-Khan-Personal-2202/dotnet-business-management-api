@@ -4,7 +4,7 @@ namespace DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
 public class CustomerResponseDto : AuditableEntityDto
 {
-    public string Name { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public bool IsActive { get; set; }
+    public string Name { get; init; } = null!;
+    public string Email { get; init; } = null!;
+    public bool IsActive { get; init; }
 }

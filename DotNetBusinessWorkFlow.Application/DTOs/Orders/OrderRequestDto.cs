@@ -1,6 +1,6 @@
 ﻿namespace DotNetBusinessWorkFlow.Application.DTOs.Orders;
 
-public class OrderRequestDto
+public sealed record OrderRequestDto
 {
     public Guid CustomerId { get; set; }
 }

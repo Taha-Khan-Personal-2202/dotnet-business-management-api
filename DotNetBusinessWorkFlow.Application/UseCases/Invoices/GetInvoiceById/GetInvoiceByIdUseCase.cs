@@ -4,15 +4,22 @@ using DotNetBusinessWorkFlow.Domain.Repositories;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.GetInvoiceById;
 
-public class GetInvoiceByIdUseCase(
-    IInvoiceRepository invoiceRepository
-) : IGetInvoiceByIdUseCase
+public sealed class GetInvoiceByIdUseCase : IGetInvoiceByIdUseCase
 {
+    private readonly IInvoiceRepository _invoiceRepository;
+
+    public GetInvoiceByIdUseCase(IInvoiceRepository invoiceRepository)
+    {
+        _invoiceRepository = invoiceRepository;
+    }
+
     public async Task<OperationResult<InvoiceResponseDto>> ExecuteAsync(Guid invoiceId)
     {
-        var invoice = await invoiceRepository.GetByIdAsync(invoiceId);
-        if (invoice == null) return OperationResult<InvoiceResponseDto>.Error("Invoice not found.");
+        var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+        if (invoice is null)
+            return OperationResult<InvoiceResponseDto>.Error("Invoice not found.", 404);
 
-        return OperationResult<InvoiceResponseDto>.Ok(EntityToDtoMapping.MapInvoice(invoice));
+        var dto = EntityToDtoMapping.MapInvoice(invoice);
+        return OperationResult<InvoiceResponseDto>.Ok(dto, "Invoice retrieved successfully.");
     }
 }

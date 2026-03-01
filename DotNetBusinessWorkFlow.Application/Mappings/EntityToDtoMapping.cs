@@ -1,6 +1,5 @@
 ﻿using DotNetBusinessWorkFlow.Application.DTOs.Customers;
 using DotNetBusinessWorkFlow.Application.DTOs.Invoices;
-using DotNetBusinessWorkFlow.Application.DTOs.OrderItem;
 using DotNetBusinessWorkFlow.Application.DTOs.Orders;
 using DotNetBusinessWorkFlow.Application.DTOs.Products;
 using DotNetBusinessWorkFlow.Domain.Entities;
@@ -44,7 +43,7 @@ public static class EntityToDtoMapping
             Id = order.Id,
             CustomerId = order.CustomerId,
             Status = order.Status,
-            TotalAmount = order.TotalAmount.Amount,
+            TotalAmount = order.TotalAmount,
             Items = order.Items.Select(MapOrderItemEntityToDto).ToList(),
             CreatedAt = order.CreatedAt,
             UpdateAt = order.UpdateAt
@@ -57,8 +56,8 @@ public static class EntityToDtoMapping
         {
             ProductId = item.ProductId,
             Quantity = item.Quantity,
-            UnitPrice = item.UnitPrice.Amount,
-            TotalPrice = item.GetTotal().Amount
+            UnitPrice = item.UnitPrice,
+            TotalPrice = item.GetTotal()
         };
     }
 
@@ -70,7 +69,7 @@ public static class EntityToDtoMapping
             OrderId = invoice.OrderId,
             CustomerId = invoice.CustomerId,
             InvoiceNumber = invoice.InvoiceNumber,
-            TotalAmount = invoice.TotalAmount.Amount,
+            TotalAmount = invoice.TotalAmount,
             IssuedAt = invoice.IssuedAt,
             CreatedAt = invoice.CreatedAt,
             UpdateAt = invoice.UpdateAt

@@ -28,7 +28,7 @@ public sealed class UpdateProductUseCase : IUpdateProductUseCase
         if (!validationResult.IsValid)
         {
             var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-            return OperationResult<ProductResponseDto>.Error($"Validation failed: {errors}", 400);
+            return OperationResult<ProductResponseDto>.Error(errors, 400);
         }
 
         var product = await _repository.GetByIdAsync(dto.Id);

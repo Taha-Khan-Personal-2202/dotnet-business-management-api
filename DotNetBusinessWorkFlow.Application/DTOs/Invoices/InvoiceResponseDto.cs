@@ -1,12 +1,13 @@
 ﻿using DotNetBusinessWorkFlow.Application.Common;
+using DotNetBusinessWorkFlow.Domain.ValueObjects;
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Invoices;
 
-public class InvoiceResponseDto : AuditableEntityDto
+public sealed class InvoiceResponseDto : AuditableEntityDto
 {
-    public Guid OrderId { get; set; }
-    public Guid CustomerId { get; set; }
-    public string InvoiceNumber { get; set; } = string.Empty;
-    public decimal TotalAmount { get; set; }
-    public DateTime IssuedAt { get; set; }
+    public Guid OrderId { get; init; }
+    public Guid CustomerId { get; init; }
+    public string InvoiceNumber { get; init; } = string.Empty;
+    public Money TotalAmount { get; init; } = Money.Zero("INR");
+    public DateTime IssuedAt { get; init; }
 }

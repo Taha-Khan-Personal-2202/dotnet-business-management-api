@@ -9,6 +9,7 @@ using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrderById;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.GetOrdersByCustomer;
 using DotNetBusinessWorkFlow.Application.UseCases.Orders.PayOrder;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetBusinessWorkFlow.API.Controllers;
@@ -51,6 +52,9 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Create([FromBody] OrderRequestDto dto)
     {
         var result = await _createOrder.ExecuteAsync(dto);
@@ -58,6 +62,9 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost("{orderId}/items")]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddItem(Guid orderId, [FromQuery] Guid productId, [FromQuery] int quantity)
     {
         var result = await _addOrderItem.ExecuteAsync(orderId, productId, quantity);
@@ -66,6 +73,9 @@ public class OrdersController : ControllerBase
 
     [HttpPost("{orderId}/confirm")]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Confirm(Guid orderId)
     {
         var result = await _confirmOrder.ExecuteAsync(orderId);
@@ -73,6 +83,9 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost("{orderId}/pay")]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Pay(Guid orderId)
     {
         var result = await _payOrder.ExecuteAsync(orderId);
@@ -81,6 +94,9 @@ public class OrdersController : ControllerBase
 
     [HttpPost("{orderId}/complete")]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Complete(Guid orderId)
     {
         var result = await _completeOrder.ExecuteAsync(orderId);
@@ -88,6 +104,9 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost("{orderId}/cancel")]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Cancel(Guid orderId)
     {
         var result = await _cancelOrder.ExecuteAsync(orderId);
@@ -95,6 +114,8 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet("{orderId}")]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto?>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<OrderResponseDto?>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid orderId)
     {
         var result = await _getOrderById.ExecuteAsync(orderId);
@@ -103,6 +124,7 @@ public class OrdersController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<IEnumerable<OrderResponseDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAllOrders.ExecuteAsync();
@@ -110,6 +132,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet("customer/{customerId}")]
+    [ProducesResponseType(typeof(OperationResult<IEnumerable<OrderResponseDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetByCustomer(Guid customerId)
     {
         var result = await _getOrdersByCustomer.ExecuteAsync(customerId);

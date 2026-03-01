@@ -32,7 +32,7 @@ public sealed class CreateOrderUseCase : ICreateOrderUseCase
         if (!validationResult.IsValid)
         {
             var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-            return OperationResult<OrderResponseDto>.Error($"Validation failed: {errors}", 400);
+            return OperationResult<OrderResponseDto>.Error(errors, 400);
         }
 
         var customer = await _customerRepository.GetByIdAsync(dto.CustomerId);
@@ -43,7 +43,7 @@ public sealed class CreateOrderUseCase : ICreateOrderUseCase
 
         if (!customer.IsActive)
         {
-            return OperationResult<OrderResponseDto>.Error("Customer account is inactive.", 403);
+            return OperationResult<OrderResponseDto>.Error("Cannot create order: customer account is inactive.", 403);
         }
 
         var order = new Order(dto.CustomerId);

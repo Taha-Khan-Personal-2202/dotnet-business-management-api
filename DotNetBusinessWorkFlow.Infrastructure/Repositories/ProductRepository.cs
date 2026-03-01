@@ -37,10 +37,8 @@ public class ProductRepository(AppDbContext context)
     public async Task DeActivateAsync(Guid productId)
     {
         var product = await _context.Products
-            .FirstOrDefaultAsync(p => p.Id == productId)
-            ?? throw new InvalidOperationException("Product not found");
+            .FirstOrDefaultAsync(p => p.Id == productId);
 
-        product.Deactivate();
+        product?.Deactivate();
     }
-
 }

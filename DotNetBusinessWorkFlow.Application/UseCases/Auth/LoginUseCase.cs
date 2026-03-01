@@ -28,29 +28,34 @@ public sealed class LoginUseCase : ILoginUseCase
 
     public async Task<OperationResult<LoginResponseDto>> ExecuteAsync(LoginRequestDto request)
     {
+        //Validate input
         var validationResult = await _validator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
-            var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-            return OperationResult<LoginResponseDto>.Error(errors, 400);
+            var errorMessage = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+            return OperationResult<LoginResponseDto>.Error(errorMessage, 400);
         }
 
+        //Find user by email
         var user = await _userRepository.GetByEmailAsync(request.Email);
         if (user is null)
         {
-            return OperationResult<LoginResponseDto>.Error("Invalid email or password.", 401);
+            return OperationResult<LoginResponseDto>.Error("Invalid credentials.", 401);
         }
 
+        //Check if account is active
         if (!user.IsActive)
         {
-            return OperationResult<LoginResponseDto>.Error("Account is disabled.", 403);
+            return OperationResult<LoginResponseDto>.Error("Account is disabled. Please contact support.", 403);
         }
 
+        //Verify password
         if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
         {
-            return OperationResult<LoginResponseDto>.Error("Invalid email or password.", 401);
+            return OperationResult<LoginResponseDto>.Error("Invalid credentials.", 401);
         }
 
+        //Generate JWT
         var token = _tokenGenerator.GenerateToken(user);
 
         var response = new LoginResponseDto
@@ -59,6 +64,6 @@ public sealed class LoginUseCase : ILoginUseCase
             Role = user.Role.ToString()
         };
 
-        return OperationResult<LoginResponseDto>.Ok(response);
+        return OperationResult<LoginResponseDto>.Ok(response, "Login successful.");
     }
 }

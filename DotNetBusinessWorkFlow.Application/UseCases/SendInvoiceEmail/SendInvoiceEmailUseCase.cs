@@ -6,22 +6,34 @@ using DotNetBusinessWorkFlow.Domain.Repositories;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Invoices.SendInvoiceEmail;
 
-public class SendInvoiceEmailUseCase(
-    IInvoiceRepository invoiceRepository,
-    ICustomerRepository customerRepository,
-    IInvoicePdfGenerator pdfGenerator,
-    IEmailSender emailSender
-) : ISendInvoiceEmailUseCase
+public sealed class SendInvoiceEmailUseCase : ISendInvoiceEmailUseCase
 {
+    private readonly IInvoiceRepository _invoiceRepository;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IInvoicePdfGenerator _pdfGenerator;
+    private readonly IEmailSender _emailSender;
+
+    public SendInvoiceEmailUseCase(
+        IInvoiceRepository invoiceRepository,
+        ICustomerRepository customerRepository,
+        IInvoicePdfGenerator pdfGenerator,
+        IEmailSender emailSender)
+    {
+        _invoiceRepository = invoiceRepository;
+        _customerRepository = customerRepository;
+        _pdfGenerator = pdfGenerator;
+        _emailSender = emailSender;
+    }
+
     public async Task<OperationResult<string>> ExecuteAsync(Guid invoiceId)
     {
-        var invoice = await invoiceRepository.GetByIdAsync(invoiceId);
-        if (invoice == null)
-            return OperationResult<string>.Error("Invoice not found.");
+        var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+        if (invoice is null)
+            return OperationResult<string>.Error("Invoice not found.", 404);
 
-        var customer = await customerRepository.GetByIdAsync(invoice.CustomerId);
-        if (customer == null)
-            return OperationResult<string>.Error("Customer not found.");
+        var customer = await _customerRepository.GetByIdAsync(invoice.CustomerId);
+        if (customer is null)
+            return OperationResult<string>.Error("Customer not found.", 404);
 
         var pdfModel = new InvoicePdfModel
         {
@@ -38,23 +50,23 @@ public class SendInvoiceEmailUseCase(
             }).ToList()
         };
 
-        var pdfBytes = pdfGenerator.Generate(pdfModel);
+        var pdfBytes = _pdfGenerator.Generate(pdfModel);
 
         try
         {
-            await emailSender.SendAsync(
-                customer.Email,
-                $"Invoice {invoice.InvoiceNumber}",
-                "Please find your invoice attached.",
+            await _emailSender.SendAsync(
+                to: customer.Email,
+                subject: $"Your Invoice {invoice.InvoiceNumber}",
+                body: "Please find your invoice attached as PDF.",
                 pdfBytes,
                 $"Invoice-{invoice.InvoiceNumber}.pdf"
             );
-        }
-        catch (Exception e)
-        {
-            return OperationResult<string>.Error(e.Message);
-        }
 
-        return OperationResult<string>.Ok("Invoice email sent successfully.");
+            return OperationResult<string>.Ok("Invoice email sent successfully.");
+        }
+        catch (Exception)
+        {
+            return OperationResult<string>.Error("Failed to send invoice email. Please try again later.", 500);
+        }
     }
 }

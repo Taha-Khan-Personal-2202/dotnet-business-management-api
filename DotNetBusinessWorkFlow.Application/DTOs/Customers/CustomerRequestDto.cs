@@ -1,8 +1,7 @@
 ﻿namespace DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
-public class CustomerRequestDto
+public sealed record CustomerRequestDto
 {
-    public string Name { get; set; }
-    public string Email { get; set; }
-
+    public string Name { get; init; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
 }

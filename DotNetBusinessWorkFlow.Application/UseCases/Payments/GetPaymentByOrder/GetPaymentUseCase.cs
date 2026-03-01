@@ -3,14 +3,20 @@ using DotNetBusinessWorkFlow.Domain.Interfaces;
 
 namespace DotNetBusinessWorkFlow.Application.UseCases.Payments.GetPaymentByOrder;
 
-public class GetPaymentUseCase(
-    IPaymentRepository paymentRepository
-) : IGetPaymentUseCase
+public sealed class GetPaymentUseCase : IGetPaymentUseCase
 {
+    private readonly IPaymentRepository _paymentRepository;
+
+    public GetPaymentUseCase(IPaymentRepository paymentRepository)
+    {
+        _paymentRepository = paymentRepository;
+    }
+
     public async Task<OperationResult<PaymentResponseDto>> ExecuteAsync(Guid orderId)
     {
-        var payment = await paymentRepository.GetByOrderIdAsync(orderId);
-        if (payment == null) return OperationResult<PaymentResponseDto>.Error("Order not found.");
+        var payment = await _paymentRepository.GetByOrderIdAsync(orderId);
+        if (payment is null)
+            return OperationResult<PaymentResponseDto>.Error("No payment found for this order.", 404);
 
         var response = new PaymentResponseDto
         {
@@ -21,6 +27,6 @@ public class GetPaymentUseCase(
             CreatedAt = payment.CreatedAt
         };
 
-        return OperationResult<PaymentResponseDto>.Ok(response);
+        return OperationResult<PaymentResponseDto>.Ok(response, "Payment details retrieved successfully.");
     }
 }

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace DotNetBusinessWorkFlow.Application.Validators.Customers;
 
-public sealed class CustomerRequestDtoValidator : AbstractValidator<CustomerRequestDto>
+public sealed class CustomerRequestUpdateDtoValidator : AbstractValidator<CustomerRequestUpdateDto>
 {
-    public CustomerRequestDtoValidator()
+    public CustomerRequestUpdateDtoValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required.")

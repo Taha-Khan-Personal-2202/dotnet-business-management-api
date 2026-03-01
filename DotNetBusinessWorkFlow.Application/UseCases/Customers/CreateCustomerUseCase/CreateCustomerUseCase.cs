@@ -28,13 +28,13 @@ public sealed class CreateCustomerUseCase : ICreateCustomerUseCase
         if (!validationResult.IsValid)
         {
             var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-            return OperationResult<Guid>.Error($"Validation failed: {errors}", 400);
+            return OperationResult<Guid>.Error(errors, 400);
         }
 
         var existing = await _customerRepository.GetByEmailAsync(dto.Email);
         if (existing is not null)
         {
-            return OperationResult<Guid>.Error($"Customer with email {dto.Email} already exists.", 409);
+            return OperationResult<Guid>.Error($"A customer with email '{dto.Email}' already exists.", 409);
         }
 
         var customer = new Customer(dto.Name, dto.Email);

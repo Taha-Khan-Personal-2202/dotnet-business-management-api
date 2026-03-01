@@ -36,6 +36,8 @@ public class ProductsController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(OperationResult<Guid>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(OperationResult<Guid>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] ProductRequestDto dto)
     {
         var result = await _createProduct.ExecuteAsync(dto);
@@ -44,6 +46,9 @@ public class ProductsController : ControllerBase
 
     [HttpPut("{productId}")]
     [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(Guid productId, [FromBody] ProductRequestUpdateDto dto)
     {
         dto.Id = productId;
@@ -53,6 +58,8 @@ public class ProductsController : ControllerBase
 
     [HttpPatch("{productId}/deactivate")]
     [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Deactivate(Guid productId)
     {
         var result = await _deactivateProduct.ExecuteAsync(productId);
@@ -61,6 +68,8 @@ public class ProductsController : ControllerBase
 
     [HttpGet("{productId}")]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto?>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(OperationResult<ProductResponseDto?>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid productId)
     {
         var result = await _getById.ExecuteAsync(productId);
@@ -69,6 +78,7 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(OperationResult<IEnumerable<ProductResponseDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var result = await _getAll.ExecuteAsync();

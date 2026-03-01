@@ -2,9 +2,9 @@
 
 namespace DotNetBusinessWorkFlow.Application.DTOs.Customers;
 
-public class CustomerRequestUpdateDto : BaseEntityDto
+public sealed class CustomerRequestUpdateDto : BaseEntityDto
 {
-    public string Name { get; set; }
-    public string Email { get; set; }
+    public string Name { get; init; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
     public bool IsActive { get; set; }
 }
